@@ -1,0 +1,28 @@
+
+extends ../../../layout/backend/layout
+block content
+	//- include ../../../layout/backend/helpers/status
+	-var collection = 'users';
+	.row
+		.col-lg-12
+			h1.page-header Tables
+	.row
+		.col-lg-12
+			div!=locals.flash
+			.panel.panel-default
+				.panel-heading
+					| DataTables Advanced Tables
+				// /.panel-heading
+				.panel-body
+					.row
+						.col-lg-6
+							include ../../../layout/backend/elements/errors
+							+errors(errors)
+					.row
+						.col-lg-6
+							form(action='/'+system.prefixAdmin+'/'+collection+'/upload' , method="POST", enctype="multipart/form-data" )
+								.form-group
+									label FLie
+									input(type="file" name="avatar" multiple)
+								.form-group
+									button.btn.btn-primary(type="submit") Submit

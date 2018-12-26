@@ -1,0 +1,46 @@
+
+.ml-5{
+	margin-left: 5px!important;
+}
+.mr-5{
+	margin-left: 5px!important;
+}
+.btn, .label{
+	margin-right: 10px;
+}
+.btn:last-child, .label:last-child{
+	margin-right: 0;
+}
+.search-items .form-control{
+	border-radius: 0;
+}
+.input-group-btn:first-child {
+	background-color: red;
+}
+.input-group-btn > .btn{
+	border-radius: 0;
+}
+.zt-form .slAction{
+	width: auto;
+	display: inline-block;
+	margin-right: 15px;
+}
+.zcontrols{
+	margin-bottom: 15px;
+}
+.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th{
+	border:none;
+}
+.glyphicon::before{
+	display: inline-block;
+	margin-right: 5px;
+	vertical-align: middle
+}
+
+/************* avatar ************/
+.img-avatar-form{
+	width:200px;
+}
+.img-avatar{
+	width: 80px;
+}

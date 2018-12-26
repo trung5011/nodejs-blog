@@ -1,0 +1,18 @@
+
+extends ../../../layout/frontend/layout
+block content
+	.site-main-container
+		// Start Top-posts
+		-if(top_posts==true)
+			include ../../../layout/frontend/elements/top-posts
+		// End  Top-posts
+		
+		// Start latest-post Area
+		section.latest-post-area.pb-120
+			.container.no-padding
+				.row
+					.col-lg-8.post-list
+						include ../../../layout/frontend/elements/article
+					// Start Sidebar	
+					include ../../../layout/frontend/sidebar
+					// End Sidebar

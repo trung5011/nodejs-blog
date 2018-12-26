@@ -1,0 +1,29 @@
+include elements/widget-post-random
+
+.col-lg-4
+	.sidebars-area
+		+widgetRandomPost(itemsRandom)
+		.single-sidebar-widget.social-network-widget
+			h6.title Social Networks
+			ul.social-list
+				li.d-flex.justify-content-between.align-items-center.fb
+					.icons.d-flex.flex-row.align-items-center
+						i.fa.fa-facebook(aria-hidden='true')
+						p 983 Likes
+					a(href='#') Like our page
+				li.d-flex.justify-content-between.align-items-center.tw
+					.icons.d-flex.flex-row.align-items-center
+						i.fa.fa-twitter(aria-hidden='true')
+						p 983 Followers
+					a(href='#') Follow Us
+				li.d-flex.justify-content-between.align-items-center.yt
+					.icons.d-flex.flex-row.align-items-center
+						i.fa.fa-youtube-play(aria-hidden='true')
+						p 983 Subscriber
+					a(href='#') Subscribe
+				li.d-flex.justify-content-between.align-items-center.rs
+					.icons.d-flex.flex-row.align-items-center
+						i.fa.fa-rss(aria-hidden='true')
+						p 983 Subscribe
+					a(href='#') Subscribe
+// End latest-post Area

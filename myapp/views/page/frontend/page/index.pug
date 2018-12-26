@@ -1,0 +1,31 @@
+
+extends ../../../layout/frontend/layout
+block content
+	.site-main-container
+		// Start Top-posts
+		-if(top_posts==true)
+			include ../../../layout/frontend/elements/top-posts
+		// End  Top-posts
+		
+		// Start latest-post Area
+		section.latest-post-area.pb-120
+			.container.no-padding
+				.row
+					.col-lg-8.post-list
+						// Start latest-post Area
+						include ../../../layout/frontend/elements/lastest-new
+						// End latest-post Area
+
+						// Start banner-ads Area
+						.col-lg-12.ad-widget-wrap.mt-30.mb-30
+							img.img-fluid(src=linkFolder+'img/banner-ad.jpg', alt='')
+						// End banner-ads Area
+
+
+						// Start popular-post Area
+						include ../../../layout/frontend/elements/popular-posts
+						// End popular-post Area
+
+					// Start Sidebar	
+					include ../../../layout/frontend/sidebar
+					// End Sidebar

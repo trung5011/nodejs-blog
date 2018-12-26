@@ -1,0 +1,22 @@
+mixin actionHelper(collection)
+	.zcontrols
+		select(name="actipn", class="form-control slAction")
+			option(value="")
+				| Bulk Action
+			option(value="/"+system.prefixAdmin+"/"+collection+"/change-status/active")
+				| Active
+			option(value="/"+system.prefixAdmin+"/"+collection+"/change-status/inactive")
+				| InActive
+			option(value="/"+system.prefixAdmin+"/"+collection+"/change-special/active")
+				| Top Post
+			option(value="/"+system.prefixAdmin+"/"+collection+"/change-special/inactive")
+				| Normal	
+			option(value="/"+system.prefixAdmin+"/"+collection+"/save-ordering")
+				| Change Ordering
+			option(value="/"+system.prefixAdmin+"/"+collection+"/delete")
+				| Delete
+		button.btn.btn-info.btnAction(type='button', id="btn-action" , value="btnAction" disabled)
+			| Apply
+		.pull-right
+			a(href="/"+system.prefixAdmin+"/"+collection+"/form", class="btn btn-warning btn-addNew")
+				| Add New	

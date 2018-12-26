@@ -1,0 +1,29 @@
+//- linkCategorys+item.slug        			link post
+//- item.name         						title
+//- item.created.user_name					author
+//- +get_the_date(item.created.time)		Time
+//- +the_excert(item.excert,150)			excert
+//- linkUploadArticle+item.thumbnail		thumbnail
+
+
+
+
+//- include element
+//- include helpers/status
+//- include helpers/filter-status
+//- include helpers/pagination
+-var linkFolder = '/public/blog/';
+-var linkUploadArticle = '/public/uploads/article/';
+-var linkCategorys = '/categorys/';
+-var linkArticle = '/article/';
+
+//- include local helper
+include helpers/format-date
+include helpers/format-summary
+
+
+include header
+	body
+		include elements/headerNav
+		block content
+		include footer

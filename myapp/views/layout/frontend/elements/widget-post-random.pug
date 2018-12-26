@@ -1,0 +1,15 @@
+mixin widgetRandomPost(items)
+	.single-sidebar-widget.most-popular-widget
+		h6.title Most Popular
+		each item in items
+			.single-list.flex-row.d-flex
+				.thumb(style="width:30%")
+					img.img-fluid(src=linkUploadArticle+item.thumbnail, alt=item.name)
+				.details(style="width:70%")
+					a(href=linkCategorys+item.slug)
+						h6=item.name
+					ul.meta
+						li
+							a(href=linkCategorys+item.slug)
+								span.lnr.lnr-calendar-full
+								+get_the_date(item.created.time)

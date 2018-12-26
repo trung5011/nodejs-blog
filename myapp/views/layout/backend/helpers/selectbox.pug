@@ -1,0 +1,5 @@
+mixin selectBoxHelper(name,field,items,condition)
+	select.id-name(name=name, class="form-control")
+		option(value="allvalue") All #{field}
+		each item in items
+			option(value=item.id, selected=(condition == item.id) ? true : false) #{item.name}

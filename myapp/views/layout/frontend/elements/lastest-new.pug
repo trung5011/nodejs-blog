@@ -1,0 +1,27 @@
+.latest-post-wrap
+	h4.cat-title Latest News
+	each item in itemsNews
+		.single-latest-post.row.align-items-center
+			.col-lg-5.post-left
+				.feature-img.relative
+					.overlay.overlay-bg
+					img.img-fluid(src=linkUploadArticle+item.thumbnail, alt='')
+				ul.tags
+					li
+						a(href=linkCategorys+item.slug)=item.group.name
+			.col-lg-7.post-right
+				a(href=linkCategorys+item.slug)
+					h4
+						| #{item.name}
+				ul.meta
+					li
+						a(href=linkCategorys+item.slug)
+							span.lnr.lnr-user
+							| #{item.created.user_name}
+					li
+						a(href=linkCategorys+item.slug)
+							span.lnr.lnr-calendar-full
+								+get_the_date(item.created.time)
+				p.excert
+					+the_excert(item.excert,150)
+	// End latest-post Area

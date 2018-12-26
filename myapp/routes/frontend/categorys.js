@@ -1,0 +1,49 @@
+var express = require('express');
+var router = express.Router();
+
+var ArticleItemModel   = require(__path.__path_models+'article');
+var CategorysModel   = require(__path.__path_models+'categorys');
+var ParamHelpers = require(__path.__path_helpers+'params');
+
+
+var folderView = __path.__path_views +'page/frontend/page/categorys';
+router.get('(/:slug)?', async function(req, res, next) {
+	let slugCategory 	= ParamHelpers.getParam(req.params,'slug','');
+	let idSlug 			= '';
+	let itemsCategorys 	=	[];
+	let itemsInCategorys=[];
+	let itemsRandom		= [];
+	if(slugCategory !=''){
+		await CategorysModel.findSlug(slugCategory).then((items)=>{
+			idSlug= items[0].id;
+		})
+	}
+	if(slugCategory ==''){
+		await ArticleItemModel.listItemsFrontend({id:''},{task:'items-in-categorys'}).then((items)=>{
+			itemsInCategorys = items
+		})
+	}else{
+		await ArticleItemModel.listItemsFrontend({id:idSlug},{task:'items-in-categorys'}).then((items)=>{
+			itemsInCategorys = items
+		})
+	}
+	await ArticleItemModel.listItemsFrontend(null,{task:'items-random'},1).then((items)=>{
+		itemsRandom = items
+	});
+	await CategorysModel.listItemsFrontend(null,{task:'items-in-menu'}).then((items)=>{
+		itemsCategorys = items
+	})
+	res.render(folderView, { 
+		pageTitle:'categorys',
+		top_posts:false,
+		itemsInCategorys,
+		itemsCategorys,
+		itemsRandom
+	});
+});
+
+
+
+
+
+module.exports = router;

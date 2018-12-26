@@ -1,0 +1,12 @@
+//- include element
+include helpers/status
+include helpers/filter-status
+include helpers/pagination
+
+include header
+body
+	#wrapper
+		include nav
+		#page-wrapper(style='min-height: 226px;')
+			block content
+include footer

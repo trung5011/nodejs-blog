@@ -1,0 +1,6 @@
+mixin sourceByHelper(userName,time)
+	.block
+		span.glyphicon.glyphicon-user(aria-hidden='true')=userName
+	.block
+		span.glyphicon.glyphicon-time(aria-hidden='true')
+			| #{ moment(time).format(system.format_long_time) }

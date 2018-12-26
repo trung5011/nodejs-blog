@@ -1,0 +1,113 @@
+
+extends ../../../layout/backend/layout
+block content
+	//- include ../../../layout/backend/helpers/status
+	include ../../../layout/backend/helpers/source-by
+	include ../../../layout/backend/helpers/sort
+	include ../../../layout/backend/helpers/selectbox
+	include ../../../layout/backend/helpers/image
+	-var collection = 'users';
+	-var folderUpload = '/public/uploads/users/';
+	.row
+		.col-lg-12
+			h1.page-header Tables
+	.row
+		.col-lg-12
+			div!=locals.flash
+			.panel.panel-default
+				.panel-heading
+					| DataTables Advanced Tables
+				// /.panel-heading
+				.panel-body
+					#dataTables-example_wrapper.dataTables_wrapper.form-inline.dt-bootstrap.no-footer
+						.row
+							
+							.col-sm-6.status-list
+								#dataTables-example_length.dataTables_length
+									label
+										| Show 
+										select.form-control.input-sm(name='dataTables-example_length', aria-controls='dataTables-example')
+											option(value='10') 10
+											option(value='25') 25
+											option(value='50') 50
+											option(value='100') 100s
+										|  entries
+
+
+									//- filterStatusHelper
+									+filterStatusHelper(statusFilter,keyword,collection+'/list')
+
+							.col-sm-2
+								+selectBoxHelper('filter_group','Group',groupItems,groupID)
+							.col-sm-4.search-items
+								form(action='/'+system.prefixAdmin+'/'+collection+'/list/'+currentStatus ,method="GET")
+									.input-group
+										input(tyoe="text",class="form-control",name="keywords",placeholder="Search for....",value=keyword)
+										span.input-group-btn
+											button.btn.btn-info(type="submit")
+												| Search
+										span.input-group-btn
+											button.btn.btn-success(type=button)
+												a(href='/'+system.prefixAdmin+'/'+collection+'/'+currentStatus)
+													| Clear			
+			.panel.panel-default
+				.panel-heading
+					| List Item
+				// /.panel-heading
+				.panel-body
+					form(role="form", class="form-ininline zt-form" , id="zt-form" action="", method="post")
+
+						//- actionHelper
+						include ../../../layout/backend/helpers/action
+						+actionHelper(collection)
+
+
+						#dataTables-example_wrapper.dataTables_wrapper.form-inline.dt-bootstrap.no-footer
+							.row
+								.col-sm-12
+									table#dataTables-example.text-center.table.table-striped.table-bordered.table-hover.dataTable.no-footer.dtr-inline(width='100%', role='grid', aria-describedby='dataTables-example_info', style='width: 100%;')
+										thead
+											tr(role='row').text-center
+												th.text-center(width="30px")
+													input.cbAll(type="checkbox", name="")
+												+sort(collection,'Name','name',sortField,sortType)
+												th.text-center Avatar
+												+sort(collection,'Status','status',sortField,sortType)
+												+sort(collection,'Ordering','ordering',sortField,sortType)
+												+sort(collection,'Group','group.name',sortField,sortType)
+												th.text-center Created
+												th.text-center Modified
+												th.sorting.text-center Action
+										tbody
+											
+											each item in items
+												tr.gradeA.odd(role='row')
+													td
+														input(type="checkbox", name="cid", value=item.id)
+													td.sorting_1=item.name
+													td
+														+imageHelpder(folderUpload,item.avatar,item.name)
+													td
+														//- | #{item.status}
+
+
+														//- statusHelper
+
+														+statusHelper(item.status,item.id,currentStatus,collection)
+
+
+
+													td
+														input.ordering.text-center(type="number", value=item.ordering)
+													td
+														| #{item.group.name}
+													td
+														+sourceByHelper(item.created.user_name,item.created.time)
+													td
+														+sourceByHelper(item.modified.user_name,item.modified.time)
+													td.text-center
+														a.btn.btn-warning(href='/'+system.prefixAdmin+'/'+collection+'/form/'+item.id) Edit
+														a.btn.btn-danger(href='/'+system.prefixAdmin+'/'+collection+'/delete/'+item.id, onclick="return confirm('bạn có muốn xoá phần tử này?');") Delete
+
+							//- pagination
+							+pagination(pagination,collection+'/list',currentStatus,keyword)

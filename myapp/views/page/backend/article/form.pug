@@ -1,0 +1,69 @@
+
+extends ../../../layout/backend/layout
+block content
+	include ../../../layout/backend/helpers/selectbox
+	include ../../../layout/backend/helpers/image
+
+	-var collection = 'article';
+	-var folderUpload = '/public/uploads/article/';
+
+	.row
+		.col-lg-12
+			h1.page-header=title
+	.row
+		.col-lg-12
+			div!=locals.flash
+			.panel.panel-default
+				.panel-heading
+					| Form
+				// /.panel-heading
+				.panel-body
+					.row
+						.col-lg-6
+							include ../../../layout/backend/elements/errors
+							+errors(errors)
+					.row
+						.col-lg-8
+							form.form_img(role="form", action='/'+system.prefixAdmin+'/'+collection+'/save' method="POST", enctype="multipart/form-data", name="form-upload")
+								.form-group
+									label Name
+									input#name_slug.form-control(name="name",value=item.name)
+								.form-group
+									label Avatar
+									input.form-control.data-avatar(type="file",name="thumbnail")
+								-if(item.id !== undefined && item.id !== '' )
+									.form-group
+										+imageHelpder(folderUpload,item.thumbnail,item.name,'img-avatar-form')
+								.form-group
+									label Slug
+									input.form-control(name="slug",value=item.slug)
+								.form-group
+									label Ordering
+									input.form-control(name="ordering",type="number", value=item.ordering)
+								.form-group
+									label Status
+									select(name="status", class="form-control")
+										option(value="novalue") Choose Status
+										option(value="active", selected=(item.status=="active") ? true : false) Active
+										option(value="inactive", selected=(item.status=="inactive") ? true : false) Inactive
+								.form-group
+									label Special
+									select(name="special", class="form-control")
+										option(value="novalue") Special
+										option(value="active", selected=(item.special=="active") ? true : false) yes
+										option(value="inactive", selected=(item.special=="inactive") ? true : false) no		
+								.form-group
+									label Categorys
+									+selectBoxHelper('categorys_id','Categorys',categorysItems,item.group.id)
+								.form-group
+									label Content
+									textarea.form-control(id='form-ckeditor',name='content' , row='3')=item.content
+								input(class="form-control", name="id", value=item.id, type="hidden")
+								input(class="form-control", name="image_old", value=item.thumbnail, type="hidden")
+								input(class="form-control name-id", name="categorys_name", value='', type="hidden")
+								button(type="submit", class="btn btn-primary")
+									| Submit
+								a(type="button", href='/'+system.prefixAdmin+'/'+collection+'/list',class="btn btn-default") Cancel
+							script(src='/public/admin/ckeditor/ckeditor.js')
+							script.
+								CKEDITOR.replace( 'form-ckeditor' );

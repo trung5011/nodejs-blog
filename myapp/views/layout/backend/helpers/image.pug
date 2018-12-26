@@ -1,0 +1,4 @@
+mixin imageHelpder(folder,imageName,altImg,className = 'img-responsive img-avatar')
+	-if(imageName == null)
+		-imageName = 'noavatar.jpeg'
+	img(src=folder+imageName, alt=altImg, class=className,data-src=folder+imageName)

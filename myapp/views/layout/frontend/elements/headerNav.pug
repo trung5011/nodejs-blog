@@ -1,0 +1,61 @@
+header
+	.header-top
+		.container
+			.row
+				.col-lg-6.col-md-6.col-sm-6.col-6.header-top-left.no-padding
+					ul
+						li
+							a(href='#')
+								i.fa.fa-facebook
+						li
+							a(href='#')
+								i.fa.fa-twitter
+						li
+							a(href='#')
+								i.fa.fa-dribbble
+						li
+							a(href='#')
+								i.fa.fa-behance
+				.col-lg-6.col-md-6.col-sm-6.col-6.header-top-right.no-padding
+					ul
+						li
+							a(href='tel:+440 012 3654 896')
+								span.lnr.lnr-phone-handset
+								span +440 012 3654 896
+						li
+							a(href='mailto:support@colorlib.com')
+								span.lnr.lnr-envelope
+								span support@colorlib.com
+	.logo-wrap
+		.container
+			.row.justify-content-between.align-items-center
+				.col-lg-4.col-md-4.col-sm-12.logo-left.no-padding
+					a(href='/')
+						img.img-fluid(src=linkFolder+'img/logo.png', alt='')
+				.col-lg-8.col-md-8.col-sm-12.logo-right.no-padding
+					img.img-fluid(src=linkFolder+'img/banner-ad.jpg', alt='')
+	#main-menu.main-menu
+		.container
+			.row.align-items-center.justify-content-between
+				nav#nav-menu-container
+					ul.nav-menu
+						li.menu-active
+							a(href='/') Home
+						li.menu-has-children
+							a(href=linkCategorys) Category
+							ul
+								each item in itemsCategorys
+									li
+										a(href=linkCategorys+item.slug)=item.name
+						li
+							a(href='') About
+						li
+							a(href='') Contact
+				// #nav-menu-container
+				.navbar-right
+					form.Search
+						input#Search-box.form-control.Search-box(type='text', name='Search-box', placeholder='Search')
+						label.Search-box-label(for='Search-box')
+							span.lnr.lnr-magnifier
+						span.Search-close
+							span.lnr.lnr-cross

@@ -1,0 +1,7 @@
+mixin filterStatusHelper(statusFilter,keyword,type)
+	each status in statusFilter
+		-var linka = '/'+system.prefixAdmin+'/'+type+'/'+status.value;
+		-if(keyword !== "" && keyword !== undefined)
+			-linka += '?keywords=' + keyword;
+		a(href=linka class='btn-'+status.class).btn.m-b-sm.btn-sm
+			| #{status.name} (#{status.count})

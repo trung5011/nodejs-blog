@@ -1,0 +1,3 @@
+mixin groupAcp(collection,group_acp,id)
+	-var link = "/"+system.prefixAdmin + "/" + collection + "/change-group-acp/" + id +"/"+ group_acp;	
+	a(href=link class=(group_acp === 'yes') ? "fa fa-check-square-o fa-lg" : "fa fa-square-o fa-lg")

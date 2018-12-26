@@ -1,0 +1,7 @@
+mixin statusHelper(status,id,currentStatus,type)
+	-var link = "/"+system.prefixAdmin + "/" + type + "/change-status/" + id +"/"+ status;
+	a(href=link)
+		-if(status=='active')
+			span.label.label-success active
+		-else if(status=='inactive')
+			span.label.label-warning inactive

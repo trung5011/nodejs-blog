@@ -1,0 +1,45 @@
+
+extends ../../../layout/backend/layout
+block content
+	//- include ../../../layout/backend/helpers/status
+	-var collection = 'items';
+	.row
+		.col-lg-12
+			h1.page-header=title
+	.row
+		.col-lg-12
+			div!=locals.flash
+			.panel.panel-default
+				.panel-heading
+					| Form
+				// /.panel-heading
+				.panel-body
+					.row
+						.col-lg-6
+							include ../../../layout/backend/elements/errors
+							+errors(errors)
+					.row
+						.col-lg-8
+							form(role="form", action='/'+system.prefixAdmin+'/'+collection+'/save' method="POST")
+								.form-group
+									label Name
+									input.form-control(name="name",value=item.name)
+								.form-group
+									label Ordering
+									input.form-control(name="ordering",type="number", value=item.ordering)
+								.form-group
+									label Status
+									select(name="status", class="form-control")
+										option(value="novalue") Choose Status
+										option(value="active", selected=(item.status=="active") ? true : false) Active
+										option(value="inactive", selected=(item.status=="inactive") ? true : false) Inactive
+								.form-group
+									label Content
+									textarea.form-control(id='form-ckeditor',name='content' , row='3')=item.content
+								input(class="form-control", name="id",value=item.id, type="hidden")
+								button(type="submit", class="btn btn-primary")
+									| Submit
+								a(type="button", href='/'+system.prefixAdmin+'/'+collection+'/list',class="btn btn-default") Cancel
+							script(src='/public/admin/ckeditor/ckeditor.js')
+							script.
+								CKEDITOR.replace( 'form-ckeditor' );

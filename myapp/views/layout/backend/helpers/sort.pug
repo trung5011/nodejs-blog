@@ -1,0 +1,9 @@
+mixin sort(collection,name,sortField,sortFieldCurrent,sortTypeCurrent,widthcol='auto')
+	-var oder = (sortTypeCurrent =="asc") ? "desc" : "asc";
+	-var link = '/'+system.prefixAdmin+'/'+collection+'/sort/'+sortField+'/'+oder;
+	-var icon = (sortField == sortFieldCurrent) ? 'sorting_'+sortTypeCurrent : 'sorting';
+	
+
+	th.text-center(width=widthcol)
+		a(href=link,class=icon)
+			| #{name}

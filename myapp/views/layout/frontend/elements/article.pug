@@ -1,0 +1,48 @@
+.single-post-wrap
+	.feature-img-thumb.relative
+		.overlay.overlay-bg
+		img.img-fluid(src=linkUploadArticle+itemsArticle.thumbnail, alt='')
+	.content-wrap
+		ul.tags.mt-10
+			li
+				a(href=linkCategorys+itemsArticle.group.slug)=itemsArticle.group.name
+		a(href='#')
+			h3=itemsArticle.name
+		ul.meta.pb-20
+			li
+				a(href='#')
+					span.lnr.lnr-user
+						=" "+itemsArticle.created.user_name
+			li
+				a(href='#')
+					span.lnr.lnr-calendar-full
+						+get_the_date(itemsArticle.created.time)
+		article
+			!=itemsArticle.content
+	.relavent-story-post-wrap.mt-30
+		h4.title Relavent Stories
+		.relavent-story-list-wrap
+			each item in itemsOther
+				.single-relavent-post.row.align-items-center
+					.col-lg-5.post-left
+						.feature-img.relative
+							.overlay.overlay-bg
+							img.img-fluid(src=linkUploadArticle+item.thumbnail, alt=item.name)
+						ul.tags
+							li
+								a(href=linkCategorys+item.group.slug)=item.group.name
+					.col-lg-7.post-right
+						a(href='image-post.html')
+							h4
+								=item.name
+						ul.meta
+							li
+								a(href='#')
+									span.lnr.lnr-user
+										=item.created.user_name
+							li
+								a(href='#')
+									span.lnr.lnr-calendar-full
+										+get_the_date(item.created.time)
+						p.excert
+							| Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.

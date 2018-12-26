@@ -1,0 +1,7 @@
+mixin specialHelper(special,id,currentSpecial,type)
+	-var link = "/"+system.prefixAdmin + "/" + type + "/change-special/" + id +"/"+ special;
+	a(href=link)
+		-if(special=='active')
+			span.label.label-success Top Post
+		-else if(special=='inactive')
+			span.label.label-warning Normarl

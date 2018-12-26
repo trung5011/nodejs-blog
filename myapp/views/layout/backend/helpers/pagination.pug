@@ -1,0 +1,80 @@
+mixin paginationListItem(pagination)
+	-var to = pagination.totalItemsPerPage * pagination.currentPage;
+	-var form = to - pagination.totalItemsPerPage + 1;
+	-if(to > pagination.totalItems)
+		-to = pagination.totalItems;
+	#dataTables-example_info.dataTables_info(role='status', aria-live='polite') Showing #{form} to #{to} of #{pagination.totalItems} entries
+
+
+
+	
+mixin paginationContent(pagination,type,currentStatus,keyword)
+	-var xhtmlPagination = "",xhtmlStart = "",xhtmlNext = "",xhtmlPrevious = "",xhtmlEnd = "";
+	-var xhtmlNumbers ="";
+	-var link = "/"+system.prefixAdmin+"/"+type+"/"+currentStatus;
+	-if (keyword !== '')
+		-link += '?keywords=' + keyword + '&page=';
+	-else
+		-link += '?page=';
+	-if(pagination.currentPage >1)
+		-xhtmlStart = "<li id='dataTables-example_previous' class='paginate_button previous-pre'><a href='"+link+"1'><<</a></li>";
+		-xhtmlPrevious = "<li class='paginate_button previous'><a href='"+link+(pagination.currentPage-1)+"'><</a></li>";
+	-if(pagination.currentPage < pagination.totalPages)
+		-xhtmlEnd = "<li class='paginate_button next-next'><a href='"+link+pagination.totalPages+"'> >> </a></li>";
+		-xhtmlNext = "<li class='paginate_button next'><a href='"+link+(pagination.currentPage+1)+"'> > </a></li>";
+
+	-var middle = Math.ceil(pagination.pageRanges/2);
+	-var min = pagination.currentPage - middle +1 ;
+	-var max = min + pagination.pageRanges;
+
+
+	-if( min<=1 )
+		-min = 1;
+		-max = pagination.pageRanges;
+	-if(max >= pagination.totalPages)
+		-max = pagination.totalPages;
+		-min = ((max - pagination.pageRanges + 1) <= 1) ? 1 : max - pagination.pageRanges + 1;
+		
+	
+
+
+	-for(var i = min ; i <= max; i++){
+		-if(i == pagination.currentPage)
+			-xhtmlNumbers += "<li class='paginate_button active'><a href='"+link+i+"'> "+i+" </a></li>";
+		-else
+			-xhtmlNumbers += "<li class='paginate_button'><a href='"+link+i+"'> "+i+" </a></li>";
+	-}
+	-xhtmlPagination = xhtmlStart + xhtmlPrevious + xhtmlNumbers + xhtmlNext  + xhtmlEnd;
+
+	-if (pagination.totalPages <=1)
+		-xhtmlPagination = "";
+	#dataTables-example_paginate.dataTables_paginate.paging_simple_numbers
+		ul.pagination!=xhtmlPagination
+		div
+			| min: #{min} max: #{max} totalPages: #{pagination.totalPages}  pageRanges: #{pagination.pageRanges}
+
+
+
+
+
+
+mixin paginationStatistics(pagination)
+	.pagination-statistics
+		span.label.label-danger.total-entries
+			| Total Items : #{pagination.totalItems}
+		span.label.label-warning.total-page
+			| Total Pages : #{pagination.totalPages}
+
+
+
+
+
+
+mixin pagination(pagination,type,currentStatus,keyword)
+	.row.pagination-items
+		.col-sm-6
+			+paginationListItem(pagination)
+		.col-sm-6
+			+paginationStatistics(pagination)
+			+paginationContent(pagination,type,currentStatus,keyword)
+			

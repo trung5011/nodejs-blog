@@ -1,0 +1,46 @@
+// Start top-post Area
+section.top-post-area.pt-10
+	.container.no-padding
+		.row.small-gutters
+			.col-lg-8.top-post-left
+				.feature-image-thumb.relative
+					.overlay.overlay-bg
+					img.img-fluid(src=linkUploadArticle+itemsSpecial[0].thumbnail, alt='')
+				.top-post-details
+					ul.tags
+						li
+							a(href=linkCategorys+itemsSpecial[0].slug)=itemsSpecial[0].group.name
+					a(href=linkCategorys+itemsSpecial[0].slug)
+						h3=itemsSpecial[0].name
+					ul.meta
+						li
+							a(href=linkCategorys+itemsSpecial[0].slug)
+								span.lnr.lnr-user
+								| #{itemsSpecial[0].created.user_name}
+						li
+							a(href=linkCategorys+itemsSpecial[0].slug)
+								span.lnr.lnr-calendar-full
+									+get_the_date(itemsSpecial[0].created.time)
+			.col-lg-4.top-post-right
+				-for(var i=1;i<itemsSpecial.length;i++)
+					-var mt = (i>=2)?'mt-10':'';
+					.single-top-post(class=mt)
+						.feature-image-thumb.relative
+							.overlay.overlay-bg
+							img.img-fluid(src=linkUploadArticle+itemsSpecial[i].thumbnail, alt='')
+						.top-post-details
+							ul.tags
+								li
+									a(href=linkCategorys+itemsSpecial[i].slug)=itemsSpecial[i].group.name
+							a(href=linkCategorys+itemsSpecial[i].slug)
+								h4=itemsSpecial[i].name
+							ul.meta
+								li
+									a(href=linkCategorys+itemsSpecial[i].slug)
+										span.lnr.lnr-user
+										| #{itemsSpecial[i].created.user_name}
+								li
+									a(href=linkCategorys+itemsSpecial[i].slug)
+										span.lnr.lnr-calendar-full
+											+get_the_date(itemsSpecial[i].created.time)
+// End top-post Area
