@@ -1,20 +1,20 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var createError 		= require('http-errors');
+var express 			= require('express');
+var path 				= require('path');
+var cookieParser 		= require('cookie-parser');
+var logger 				= require('morgan');
 
 
 /************* libary ************/
+const passport 			= require('passport');
+const flash 			= require('connect-flash');
+const session 			= require('express-session');
+const validator  		= require('express-validator');
+const pathFolder 		= require('./path');
+const mongoose 			= require('mongoose');
+var   moment 			= require('moment');
 
-const flash = require('express-flash-notification');
-const session = require('express-session');
-const validator  = require('express-validator');
-const pathFolder = require('./path');
-const mongoose = require('mongoose');
-var moment = require('moment');
 
-/************* end ************/
 
 
 /************* Define Path ************/
@@ -29,11 +29,12 @@ global.__path = {
 	__path_models:__intermediate + pathFolder.folder_models +'/',
 	__path_validates:__intermediate + pathFolder.folder_validates +'/',
 	__path_views:__intermediate + pathFolder.folder_view +'/',
+	__path_middeware:__intermediate + pathFolder.folder_middeware +'/',
 	__path_public:__base + pathFolder.folder_public +'/',
 	__path_uploads:__base+'public/' + pathFolder.folder_uploads + '/',
 }
 
-/************* end ************/
+
 
 
 
@@ -52,7 +53,6 @@ db.once('open',() => {
 	console.log('connected');
 });
 
-/************* end ************/
 
 
 
@@ -60,13 +60,25 @@ db.once('open',() => {
 
 
 
+/************* session ************/
 var app = express();
+
 app.use(cookieParser());
 app.use(session({ 
 	secret: 'keyboard cat',
 	resave: false,
-	saveUninitialized: true
+	saveUninitialized: true,
+	cookie:{
+		maxAge:3*60*60*1000
+	}
 }));
+
+require(__path.__path_configs+'passport')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+/************* validate ************/
 app.use(validator({
 	customValidators:{
 		isNotEqual:(value1,value2) =>{
@@ -76,40 +88,45 @@ app.use(validator({
 }));
 
 /************* notification ************/
+app.use(flash());
+app.use(function(req,res,next){
+	res.locals.messages = req.flash();
+	next();
+});
 
-app.use(flash(app,{
-	sessionName: 'item',
-	utilityName: 'flash',
-	localsName: 'flash',
-	viewName:__path.__path_views + 'layout/backend/elements/notification',
-	beforeSingleRender: function(notification, callback) {
-		if (notification.type) {
-		  switch(notification.type) {
-			case 'error':
-			  notification.alert_class = 'danger'
-			break;
-			case 'success':
-			  notification.alert_class = 'success'
-			break;
-		  }
-		}
-		callback(null, notification)
-	},
-	afterAllRender: function(htmlFragments, callback) {
-		// Naive JS is appened, waits a while expecting for the DOM to finish loading,
-		// The timeout can be removed if jOuery is loaded before this is called, or if you're using vanilla js.
-		htmlFragments.push([
-		  `<script type="text/javascript">
-				setTimeout(function(){
-					$('.alert-dismissable .close').trigger('click');
-				},6000);
-		  </script>`
-		].join(''))
-		callback(null, htmlFragments.join(''))
-	  },
-}));
+/************* notification old ************/
+// app.use(flash(app,{
+// 	sessionName: 'item',
+// 	utilityName: 'flash',
+// 	localsName: 'flash',
+// 	beforeSingleRender: function(notification, callback) {
+// 		if (notification.type) {
+// 		  switch(notification.type) {
+// 			case 'error':
+// 			  notification.alert_class = 'danger'
+// 			break;
+// 			case 'success':
+// 			  notification.alert_class = 'success'
+// 			break;
+// 		  }
+// 		}
+// 		callback(null, notification)
+// 	},
+// 	afterAllRender: function(htmlFragments, callback) {
+// 		// Naive JS is appened, waits a while expecting for the DOM to finish loading,
+// 		// The timeout can be removed if jOuery is loaded before this is called, or if you're using vanilla js.
+// 		htmlFragments.push([
+// 		  `<script type="text/javascript">
+// 				setTimeout(function(){
+// 					$('.alert-dismissable .close').trigger('click');
+// 				},6000);
+// 		  </script>`
+// 		].join(''))
+// 		callback(null, htmlFragments.join(''))
+// 	  },
+// }));
 
-/************* end ************/
+
 
 
 /************* view engine setup  ************/
@@ -117,7 +134,7 @@ app.use(flash(app,{
 app.set(__path.__path_views+'views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-/************* end ************/
+
 
 
 // app.use(logger('dev'));
@@ -132,7 +149,7 @@ app.use('/public',express.static(path.join(__dirname, 'public')));
 app.locals.system = systemConfig;
 app.locals.moment = moment;
 
-/************* end ************/
+
 
 
 app.use(`/${systemConfig.prefixAdmin}`, indexAdminRouter);
@@ -145,14 +162,14 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-/************* end ************/
+
 
 
 /************* error handler ************/
 
 app.use( async function(err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
+//   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
 
@@ -178,7 +195,7 @@ app.use( async function(err, req, res, next) {
  
 });
 
-/************* end ************/
+
 
 
 module.exports = app;

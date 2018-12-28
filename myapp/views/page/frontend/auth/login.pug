@@ -1,0 +1,23 @@
+
+extends ../../../layout/backend/layoutLogin
+block content
+	//- include ../../../layout/backend/helpers/status
+	-var collection = 'auth';
+	-var linkSubmit = '/'+collection+'/login';
+	.login-panel.panel.panel-default
+		.panel-heading
+			h3.panel-title
+				| Please Sign In
+		.panel-body
+			include ../../../layout/backend/elements/notification
+			include ../../../layout/backend/elements/errors-login
+			+errorsLogin(errors)
+			form(role=form, action=linkSubmit , method='POST')
+				fieldset
+					.form-group
+						input.form-control(type="text",placeholder='Username',name='username',value=item.username)
+					.form-group
+						input.form-control(type="password",placeholder='Password',name='password',value=item.password)
+					.form-group
+						button.btn.btn-primary(type='submit') Login	
+	

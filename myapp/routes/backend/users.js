@@ -1,5 +1,6 @@
 var express     	= require('express');
 var router       	= express.Router();
+var md5 				= require('md5');
 
 
 
@@ -15,6 +16,7 @@ var systemConfig 	= require(__path.__path_configs+'systems');
 var util 			= require('util');
 var link 			= `/${systemConfig.prefixAdmin}/users/list`;
 var folderView 		= __path.__path_views+'page/backend/users' ;
+
 var pageTitleIndex 	= 'Users Management - List';
 var pageTitleAdd 	= pageTitleIndex + ' - Add';
 var pageTitleEdit 	= pageTitleIndex + ' - Edit';
@@ -193,8 +195,7 @@ router.post('/save',  function(req, res, next) {
 
 		// validator
 		let errors = userValidator.validator(req,errUpload,taskCurrent);
-
-
+		item.pass_word = md5(item.pass_word);
 		if (errors.length > 0) {
 			let pageTitle = (taskCurrent == "add") ? pageTitleAdd : pageTitleEdit;
 			if(req.file !=  undefined) FileHelper.removeFile(folderUpload,req.file.filename);

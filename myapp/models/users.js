@@ -2,6 +2,7 @@ var UsersModel 		= require(__path.__path_schema + 'users');
 var FileHelper   		= require(__path.__path_helpers+'file');
 var folderUpload = 'public/uploads/users/';
 
+
 module.exports = {
 	listItems:(params,options=null) => {
 		let objwhere 		= {};
@@ -23,7 +24,11 @@ module.exports = {
 	getItem:(id,option=null) =>{
 		return UsersModel.findById(id);
 	},
-
+	getItemByUsername:(username,options=null) =>{
+		if(options==null) {
+			return UsersModel.find({status:'active',user_name:username}).select('user_name pass_word avatar status group.name')
+		}
+	},
 	countItem:(params,options=null) => {
 		let objwhere = {};
 		if(params.groupID !== 'allvalue' && params.groupID !== '') objwhere['group.id'] = params.groupID;
@@ -107,6 +112,7 @@ module.exports = {
 				id:item.group_id,
 				name:item.group_name
 			}
+			
 			return new UsersModel(item).save();
 		}
 		// edit item in form
@@ -117,6 +123,8 @@ module.exports = {
 				ordering:parseInt(item.ordering),
 				content:item.content,
 				avatar:item.avatar,
+				user_name:item.user_name,
+				pass_word:item.pass_word,
 				modified:{
 					user_id:0,
 					user_name:"admin",

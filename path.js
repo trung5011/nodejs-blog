@@ -8,4 +8,5 @@ module.exports = {
 	folder_validates:'validates',
 	folder_view:'views',
 	folder_uploads:'uploads',
+	folder_middeware:'middeware',
 }

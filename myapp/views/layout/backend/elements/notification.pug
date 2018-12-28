@@ -1,4 +1,14 @@
-.alert.alert-dismissable(class="alert-"+alert_class)
-	button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
-	a.alert-link(href='#')
-		| #{message}
+
+//- p=JSON.stringify(messages)
+each message,index in locals.messages
+	-var typeError = (index == 'success') ? 'success' :'danger';
+	.alert.alert-dismissable(class="alert-"+typeError)
+		button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+		a.alert-link(href='#')
+			| #{message}
+script(type='text/javascript').
+	document.addEventListener("DOMContentLoaded", function(event) {
+		setTimeout(function(){
+			$('.alert-dismissable .close').trigger('click');
+		},6000);
+	});

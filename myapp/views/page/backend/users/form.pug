@@ -29,6 +29,12 @@ block content
 								.form-group
 									label Avatar
 									input.form-control.data-avatar(type="file",name="avatar")
+								.form-group
+									label User name
+									input.form-control(name="user_name",value=item.user_name)
+								.form-group
+									label Password
+									input.form-control(name="pass_word",value='',type='password')
 								-if(item.id !== undefined && item.id !== '' )
 									.form-group
 										+imageHelpder(folderUpload,item.avatar,item.name,'img-avatar-form')

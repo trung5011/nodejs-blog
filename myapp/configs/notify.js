@@ -1,12 +1,16 @@
 module.exports = {
-	CHANGE_GROUPACP_SUCCES:'Cât nhật group ACP thành công',
-	CHANGE_STATUS_SUCCES:'Cât nhật stastus thành công',
+	CHANGE_GROUPACP_SUCCESS:'Cât nhật group ACP thành công',
+	CHANGE_STATUS_SUCCESS:'Cât nhật stastus thành công',
+	CHANGE_SPECIAL_SUCCESS:'Cât nhật special thành công',
+	CHANGE_SPECIAL_MULTI_SUCCESS:'Có %d phần tử cât nhật special thành công',
 	CHANGE_STATUS_MULTI_SUCCESS:'Có %d phần tử cât nhật stastus thành công',
 	CHANGE_ORDERING_SUCCESS:'Cật nhật ordering thành công',
 	DELETE_SUCCESS:'Xoá thành công',
 	DELETE_MULTI_SUCCESS:'Xoá thành công %d phần tử',
 	ADD_SUCCESS:'Thêm mới phần tử thành công',
 	EDIT_SUCCESS:'Cật nhật item thành công',
+	ERROR_LOGIN_EXITS:'User hoặc mật khẩu không đúng',
+	ERROR_USER_EXITS:'User không tồn tại',
 	VALIDATES:{
 		ERROR_NAME: 'Chiều dài từ %d đến %d ký tự',
 		ERROR_ORDERING:'Phải là số nguyên lớn hơn %d và nhỏ hơn %d ',
@@ -16,6 +20,7 @@ module.exports = {
 		ERROR_GROUP:'phải được chọn',
 		ERROR_FILE_REQUIRE:'Vui lòng chọn file upload',
 		ERROR_FILE_LIMIT:'Kích thước file không phù hợp',
-		ERROR_FILE_EXTENSION:'Phần mở rộng file không hợp lệ'
+		ERROR_FILE_EXTENSION:'Phần mở rộng file không hợp lệ',
+		ERROR_LOGIN_USERNAME:'phải từ %d đến %d ký tự ',
 	}
 }

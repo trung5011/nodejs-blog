@@ -68,7 +68,7 @@ router.get('/change-status/:id/:status', function(req, res, next) {
 	ItemsModel
 		.changeStatus(currentStatus,id,{task:'update-one'})
 		.then((result) => {
-		req.flash('success',notify.CHANGE_STATUS_SUCCES, false);
+		req.flash('success',notify.CHANGE_STATUS_SUCCESS);
 		res.redirect(link);
 	})
   });
@@ -79,7 +79,7 @@ router.post('/change-status/:status', function(req, res, next) {
 	ItemsModel
 		.changeStatus(currentStatus,req.body.cid,{task:'update-multi'})
 		.then((result) =>{
-		req.flash('success', util.format(notify.CHANGE_STATUS_MULTI_SUCCESS,result.n), false);
+		req.flash('success', util.format(notify.CHANGE_STATUS_MULTI_SUCCESS,result.n));
 		res.redirect(link);
 	})
 });
@@ -92,7 +92,7 @@ router.post('/change-status/:status', function(req, res, next) {
 router.get('/delete/:id', function(req, res, next) {
 	let id 				= ParamHelpers.getParam(req.params,'id','');
 	ItemsModel.deleteItem(id,{task:'delete-one'}).then((result) =>{
-		req.flash('success', notify.DELETE_SUCCESS, false);
+		req.flash('success', notify.DELETE_SUCCESS);
 		res.redirect(link);
 	})
 });
@@ -100,7 +100,7 @@ router.get('/delete/:id', function(req, res, next) {
 router.post('/delete', function(req, res, next) {
 	let id 				= req.body.cid;
 	ItemsModel.deleteItem(id,{task:'delete-multi'}).then((result) =>{
-		req.flash('success', util.format(notify.DELETE_MULTI_SUCCESS,result.n), false);
+		req.flash('success', util.format(notify.DELETE_MULTI_SUCCESS,result.n));
 		res.redirect(link);
 	})
 });
@@ -114,7 +114,7 @@ router.post('/save-ordering', function(req, res, next) {
 	let cids 		= req.body.cid;
 	let orderings 	= req.body.ordering;
 	ItemsModel.changeOrdering(cids,orderings,null).then((result)=>{
-		req.flash('success', notify.CHANGE_ORDERING_SUCCESS, false);
+		req.flash('success', notify.CHANGE_ORDERING_SUCCESS);
 		res.redirect(link);
 	});
 });
@@ -173,7 +173,7 @@ router.post('/save', function(req, res, next) {
 	}else{
 		let message = (taskCurrent == "add") ? notify.ADD_SUCCESS : notify.EDIT_SUCCESS;
 		ItemsModel.saveItem(item,{task:taskCurrent}).then((result) =>{
-			req.flash('success', message, false);
+			req.flash('success', message);
 			res.redirect(link);
 		})
 	}

@@ -10,7 +10,9 @@ block content
 			h1.page-header Tables
 	.row
 		.col-lg-12
-			div!=locals.flash
+			//- div!=locals.flash
+			include ../../../layout/backend/elements/notification
+
 			.panel.panel-default
 				.panel-heading
 					| DataTables Advanced Tables
@@ -74,7 +76,6 @@ block content
 												th.text-center Modified
 												th.sorting.text-center Action
 										tbody
-											
 											each item in items
 												tr.gradeA.odd(role='row')
 													td

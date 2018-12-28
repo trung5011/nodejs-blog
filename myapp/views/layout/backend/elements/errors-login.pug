@@ -1,0 +1,12 @@
+mixin errorsLogin(errors)
+	-if(errors)
+		.alert.alert-danger(rol=alert)
+			ul
+				each error in errors
+					-var arrWord = error.param.split('_');
+					-var strWord = '';
+					each word in arrWord
+						-strWord += word.charAt(0).toUpperCase() + word.slice(1) + " : ";
+					li
+						b=strWord
+						| #{error.msg}

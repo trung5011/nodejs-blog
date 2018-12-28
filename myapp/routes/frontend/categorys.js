@@ -10,11 +10,9 @@ var folderView = __path.__path_views +'page/frontend/page/categorys';
 router.get('(/:slug)?', async function(req, res, next) {
 	let slugCategory 	= ParamHelpers.getParam(req.params,'slug','');
 	let idSlug 			= '';
-	let itemsCategorys 	=	[];
 	let itemsInCategorys=[];
-	let itemsRandom		= [];
 	if(slugCategory !=''){
-		await CategorysModel.findSlug(slugCategory).then((items)=>{
+		await CategorysModel.findSlug(slugCategory ).then((items)=>{
 			idSlug= items[0].id;
 		})
 	}
@@ -27,18 +25,12 @@ router.get('(/:slug)?', async function(req, res, next) {
 			itemsInCategorys = items
 		})
 	}
-	await ArticleItemModel.listItemsFrontend(null,{task:'items-random'},1).then((items)=>{
-		itemsRandom = items
-	});
-	await CategorysModel.listItemsFrontend(null,{task:'items-in-menu'}).then((items)=>{
-		itemsCategorys = items
-	})
+
+
 	res.render(folderView, { 
 		pageTitle:'categorys',
 		top_posts:false,
 		itemsInCategorys,
-		itemsCategorys,
-		itemsRandom
 	});
 });
 

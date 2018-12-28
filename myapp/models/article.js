@@ -24,7 +24,7 @@ module.exports = {
 	listItemsFrontend:(params=null,option=null,itemslimit=null) =>{
 		let find = {};
 		let select = 'name slug group created.user_name created.time thumbnail content excert';
-		let limit =  (itemslimit!=null&&itemslimit!=undefined) ? Number(itemslimit) : '' ;
+		let limit =  (itemslimit!=null&&itemslimit!=undefined) ? Number(itemslimit) : 5 ;
 		let sort = {};
 		if(option.task == "items-special"){
 			find = {status:'active',special:'active'};
@@ -36,8 +36,6 @@ module.exports = {
 		}
 		
 		else if(option.task == 'items-other'){
-			console.log(params.group.id);
-
 			find = {status:'active','_id':{$ne:params.id},'group.id':params.group.id}
 			sort = {ordering:'asc'};
 		}

@@ -13,7 +13,8 @@ block content
 			h1.page-header Tables
 	.row
 		.col-lg-12
-			div!=locals.flash
+			//- div!=locals.flash
+			include ../../../layout/backend/elements/notification
 			.panel.panel-default
 				.panel-heading
 					| DataTables Advanced Tables
@@ -75,11 +76,12 @@ block content
 												+sort(collection,'Status','status',sortField,sortType)
 												+sort(collection,'Ordering','ordering',sortField,sortType)
 												+sort(collection,'Group','group.name',sortField,sortType)
-												th.text-center Created
-												th.text-center Modified
+												//- th.text-center Created
+												//- th.text-center Modified
+												th.sorting.text-center Username
+												th.sorting.text-center Password
 												th.sorting.text-center Action
 										tbody
-											
 											each item in items
 												tr.gradeA.odd(role='row')
 													td
@@ -98,13 +100,15 @@ block content
 
 
 													td
-														input.ordering.text-center(type="number", value=item.ordering)
+														input.ordering.text-center(type="number", value=item.ordering,style="width:30px")
 													td
 														| #{item.group.name}
-													td
-														+sourceByHelper(item.created.user_name,item.created.time)
-													td
-														+sourceByHelper(item.modified.user_name,item.modified.time)
+													td=item.user_name
+													td=item.pass_word
+													//- td
+													//- 	+sourceByHelper(item.created.user_name,item.created.time)
+													//- td
+													//- 	+sourceByHelper(item.modified.user_name,item.modified.time)
 													td.text-center
 														a.btn.btn-warning(href='/'+system.prefixAdmin+'/'+collection+'/form/'+item.id) Edit
 														a.btn.btn-danger(href='/'+system.prefixAdmin+'/'+collection+'/delete/'+item.id, onclick="return confirm('bạn có muốn xoá phần tử này?');") Delete

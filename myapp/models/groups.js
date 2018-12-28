@@ -32,8 +32,8 @@ module.exports = {
 		} 
 		return GroupsModel.updateOne({_id:id},data);
 	},
-	getItem:(id,option=null) =>{
-		return GroupsModel.findById(id);
+	getItem:(id,option=null,select=null) =>{
+		return GroupsModel.findById(id).select(select);
 	},
 	countItem:(params,options=null) => {
 		let objwhere 		= {};

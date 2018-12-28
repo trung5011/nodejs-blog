@@ -85,7 +85,7 @@ router.get('/change-status/:id/:status', function(req, res, next) {
 	ArticleItemModel
 		.changeStatus(currentStatus,id,{task:'update-one'})
 		.then((result) => {
-		req.flash('success',notify.CHANGE_STATUS_SUCCES, false);
+		req.flash('success',notify.CHANGE_STATUS_SUCCESS);
 		res.redirect(link);
 	})
   });
@@ -96,7 +96,7 @@ router.post('/change-status/:status', function(req, res, next) {
 	ArticleItemModel
 		.changeStatus(currentStatus,req.body.cid,{task:'update-multi'})
 		.then((result) =>{
-		req.flash('success', util.format(notify.CHANGE_STATUS_MULTI_SUCCESS,result.n), false);
+		req.flash('success', util.format(notify.CHANGE_STATUS_MULTI_SUCCESS,result.n));
 		res.redirect(link);
 	})
 });
@@ -112,7 +112,7 @@ router.get('/change-special/:id/:special', function(req, res, next) {
 	ArticleItemModel
 		.changeSpecial(currentSpecial,id,{task:'update-one'})
 		.then((result) => {
-		req.flash('success',notify.CHANGE_STATUS_SUCCES, false);
+		req.flash('success',notify.CHANGE_SPECIAL_SUCCESS);
 		res.redirect(link);
 	})
   });
@@ -123,7 +123,7 @@ router.post('/change-special/:special', function(req, res, next) {
 	ArticleItemModel
 		.changeSpecial(currentSpecial,req.body.cid,{task:'update-multi'})
 		.then((result) =>{
-		req.flash('success', util.format(notify.CHANGE_STATUS_MULTI_SUCCESS,result.n), false);
+		req.flash('success', util.format(notify.CHANGE_SPECIAL_MULTI_SUCCESS,result.n));
 		res.redirect(link);
 	})
 });
@@ -144,7 +144,7 @@ router.get('/delete/:id', function(req, res, next) {
 router.post('/delete', function(req, res, next) {
 	let id 				= req.body.cid;
 	ArticleItemModel.deleteItem(id,{task:'delete-multi'}).then((result) =>{
-		req.flash('success', util.format(notify.DELETE_MULTI_SUCCESS,result.n), false);
+		req.flash('success', util.format(notify.DELETE_MULTI_SUCCESS,result.n));
 		res.redirect(link);
 	})
 });
@@ -157,7 +157,7 @@ router.post('/save-ordering', function(req, res, next) {
 	let cids 		= req.body.cid;
 	let orderings 	= req.body.ordering;
 	ArticleItemModel.changeOrdering(cids,orderings,null).then((result)=>{
-		req.flash('success', notify.CHANGE_ORDERING_SUCCESS, false);
+		req.flash('success', notify.CHANGE_ORDERING_SUCCESS);
 		res.redirect(link);
 	});
 });
@@ -259,7 +259,7 @@ router.post('/save',  function(req, res, next) {
 			item.thumbnail = (req.file != undefined) ? req.file.filename : item.thumbnail;
 			item.excert = item.content.replace(/(<([^>]+)>)/ig,"");
 			ArticleItemModel.saveItem(item,{task:taskCurrent}).then((result) =>{
-				req.flash('success', message, false);
+				req.flash('success', message);
 				res.redirect(link);
 			});
 
