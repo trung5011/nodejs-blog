@@ -52,6 +52,10 @@ nav.navbar.navbar-default.navbar-static-top(role='navigation', style='margin-bot
 						|  List
 				-if(permission == 'yes')		
 					li
+						a(href='/'+system.prefixAdmin+'/menu/list')
+							i.fa.fa-table.fa-fw
+							|  Menu		
+					li
 						a(href='#')
 							i.fa.fa-group.fa-fw
 							| Manage User

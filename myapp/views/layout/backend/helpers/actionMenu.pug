@@ -1,0 +1,18 @@
+mixin actionMenuHelper(collection,permission=false)
+	.zcontrols
+		select(name="action", class="form-control slAction")
+			option(value="")
+				| Bulk Action
+			option(value="/"+system.prefixAdmin+"/"+collection+"/change-status/active")
+				| Active
+			option(value="/"+system.prefixAdmin+"/"+collection+"/change-status/inactive")
+				| InActive
+			option(value="/"+system.prefixAdmin+"/"+collection+"/save-ordering")
+				| Change Ordering
+			option(value="/"+system.prefixAdmin+"/"+collection+"/delete")
+				| Delete
+		button.btn.btn-info.btnAction(type='button', id="btn-action" , value="btnAction" disabled)
+			| Apply
+		.pull-right
+			span(class="btn btn-info btn-submit-menu") Submit
+			span(class="btn btn-warning btn-addNew-menu") Add New

@@ -91,12 +91,33 @@ function ChangeToSlug(title){
 	//In slug ra textbox có id “slug”
 	return slug;
 }
-
+var appendMenu = function(frames){
+	var xhtmlMenu = `
+		<tr class="gradeA odd" role="row">
+			<td><input type="checkbox" name="cid" value=""></td>
+			<td class="name-menu"><input type="text" name="cid" value=""></td>
+			<td><a href=""><span class="label label-success">active</span></a></td>
+			<td><input class="ordering text-center" type="number" value=""></td>
+			<td>
+				<div class="block"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+				<div class="block"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></div>
+			</td>
+			<td>
+				<div class="block"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+				<div class="block"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></div>
+			</td>
+			<td class="text-center"><a class="btn btn-danger" href="" onclick="return confirm('bạn có muốn xoá phần tử này?');">Delete</a></td>
+		</tr>
+	`
+	$(frames).append(xhtmlMenu);
+}
 $(document).ready(function(){
 	var ckbAll = $('.cbAll');
 	var fmAdmin = $('#zt-form');
 
-
+	$('.btn-addNew-menu').on('click',function(){
+		appendMenu('.contentListUser');
+	})
 	changeFormAction('#zt-form .slAction', "#zt-form", "#btn-action");
 
 	ckbAll.on('click',function(){

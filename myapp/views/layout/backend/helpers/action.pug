@@ -1,16 +1,17 @@
-mixin actionHelper(collection)
+mixin actionHelper(collection,permission=false)
 	.zcontrols
-		select(name="actipn", class="form-control slAction")
+		select(name="action", class="form-control slAction")
 			option(value="")
 				| Bulk Action
 			option(value="/"+system.prefixAdmin+"/"+collection+"/change-status/active")
 				| Active
 			option(value="/"+system.prefixAdmin+"/"+collection+"/change-status/inactive")
 				| InActive
-			option(value="/"+system.prefixAdmin+"/"+collection+"/change-special/active")
-				| Top Post
-			option(value="/"+system.prefixAdmin+"/"+collection+"/change-special/inactive")
-				| Normal	
+			-if(permission==true)
+				option(value="/"+system.prefixAdmin+"/"+collection+"/change-special/active")
+					| Top Post
+				option(value="/"+system.prefixAdmin+"/"+collection+"/change-special/inactive")
+					| Normal	
 			option(value="/"+system.prefixAdmin+"/"+collection+"/save-ordering")
 				| Change Ordering
 			option(value="/"+system.prefixAdmin+"/"+collection+"/delete")
