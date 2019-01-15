@@ -66,4 +66,7 @@ block content
 								a(type="button", href='/'+system.prefixAdmin+'/'+collection+'/list',class="btn btn-default") Cancel
 							script(src='/public/admin/ckeditor/ckeditor.js')
 							script.
-								CKEDITOR.replace( 'form-ckeditor' );
+								CKEDITOR.replace( 'form-ckeditor',{
+									"extraPlugins" : "imagebrowser",
+									"imageBrowser_listUrl":"/admin/editor-img"
+								});

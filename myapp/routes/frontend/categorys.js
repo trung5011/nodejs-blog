@@ -12,7 +12,11 @@ router.get('(/:slug)?', async function(req, res, next) {
 	let idSlug 			= '';
 	let itemsInCategorys=[];
 	if(slugCategory !=''){
-		await CategorysModel.findSlug(slugCategory ).then((items)=>{
+		console.log(slugCategory);
+
+		await CategorysModel.findSlug(slugCategory).then((items)=>{
+			console.log(items);
+
 			idSlug= items[0].id;
 		})
 	}

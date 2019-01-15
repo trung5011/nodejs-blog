@@ -13,6 +13,7 @@ module.exports = async (req,res,next)=>{
 		if(permission=='yes'){
 			res.locals.permission=permission;
 		}
+		res.locals.user = req.user
 		next();
 
 	}else{

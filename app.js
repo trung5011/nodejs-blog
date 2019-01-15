@@ -4,7 +4,7 @@ var path 				= require('path');
 var cookieParser 		= require('cookie-parser');
 var logger 				= require('morgan');
 
-
+var router = express.Router();
 /************* libary ************/
 const passport 			= require('passport');
 const flash 			= require('connect-flash');
@@ -42,6 +42,15 @@ const systemConfig = require(__path.__path_configs + 'systems');
 var indexAdminRouter = require(__path.__path_routes+'backend/index');
 var indexRouter = require(__path.__path_routes+'frontend/index');
 
+
+
+
+
+
+
+
+
+
 /************* connect database ************/
 
 // mongoose.connect('mongodb://127.0.0.1/demo', { useNewUrlParser: true });
@@ -53,10 +62,6 @@ db.on('error',() =>{
 db.once('open',() => {
 	console.log('connected');
 });
-
-
-
-
 
 
 
@@ -174,19 +179,14 @@ app.use( async function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
 
-  if(systemConfig.env == "dev"){
+  if(systemConfig.env == 'dev'){
 		// render the error page
 	res.status(err.status || 500);
 	res.render(__path.__path_views+'error',{title :'error page'});
   }
-  if(systemConfig.env == "production"){
-	var CategorysModel   = require(__path.__path_models+'categorys');
+  if(systemConfig.env == 'production'){
 	let itemsCategorys =[];
 	var folderView = __path.__path_views +'page/frontend/page/404';
-
-	await CategorysModel.listItemsFrontend(null,{task:'items-in-menu'}).then((items)=>{
-		itemsCategorys = items
-	})
 	res.render(folderView, { 
 		pageTitle:'404 page',
 		top_posts:false,

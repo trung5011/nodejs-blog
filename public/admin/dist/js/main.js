@@ -91,25 +91,69 @@ function ChangeToSlug(title){
 	//In slug ra textbox có id “slug”
 	return slug;
 }
+
+function checkTime(i) 
+{
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+function startTime() 
+{
+    // Lấy Object ngày hiện tại
+    var today = new Date();
+	
+    // Giờ, phút, giây hiện tại
+    var h = today.getHours();
+	var d = today.getDate();
+    var m = today.getMonth();
+	var y = today.getFullYear();
+    // Chuyển đổi sang dạng 01, 02, 03
+	let time= h + '-' +d+'/'+ + m + "/" + y;
+	return time ;
+}
 var appendMenu = function(frames){
+
+	var time = startTime();
+	var userAdmin = $('#user-locals').text();
 	var xhtmlMenu = `
-		<tr class="gradeA odd" role="row">
-			<td><input type="checkbox" name="cid" value=""></td>
-			<td class="name-menu"><input type="text" name="cid" value=""></td>
-			<td><a href=""><span class="label label-success">active</span></a></td>
-			<td><input class="ordering text-center" type="number" value=""></td>
-			<td>
-				<div class="block"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-				<div class="block"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></div>
-			</td>
-			<td>
-				<div class="block"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-				<div class="block"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></div>
-			</td>
-			<td class="text-center"><a class="btn btn-danger" href="" onclick="return confirm('bạn có muốn xoá phần tử này?');">Delete</a></td>
-		</tr>
+	<li class="gradeA odd" role="row" data-name="" data-slug="">
+		<div class="item-menu">
+			<div class="menu-item-col">
+				<p class="menu-name"></p>
+				<div class="menu-item__btn"><a class="btn btn-danger" href="" onclick="return confirm('bạn có muốn xoá phần tử này?');">Delete</a></div>
+			</div>
+			<div class="form-item-menu">
+				<div class=" form-item-menu__content">Name :
+					<input class="form-menu-name" type="text" value="" name="menu_name" />
+				</div>
+				<div class=" form-item-menu__content">Slug :
+					<input class="form-menu-slug" type="text" value="" name="menu_slug" />
+				</div>
+			</div>
+		</div>
+		<ul></ul>
+	</li>
 	`
 	$(frames).append(xhtmlMenu);
+	$('.menu_name input').on('change',function(){
+		$(this).val();
+	});
+	onKeyupChange();
+}
+var onKeyupChange = function(){
+	$('input[name="menu_name"]').on('keyup',function(){
+		let content = $(this).val();
+		let mainLi = $(this).parents('.item-menu').parent('li.gradeA');
+		mainLi.find('.menu-name').eq(0).text(content);
+		mainLi.attr('data-name',content);
+	})
+	$('input[name="menu_slug"]').on('keyup',function(){
+		let content = $(this).val();
+		let mainLi = $(this).parents('.item-menu').parent('li.gradeA');
+			mainLi.attr('data-slug',content);
+	})
 }
 $(document).ready(function(){
 	var ckbAll = $('.cbAll');
@@ -168,6 +212,22 @@ $(document).ready(function(){
 		
 	})
 
+
+	/************* menu page ************/
+	$('.btn-delete-menu').on('click',function(){
+		var resultConfirm = confirm('bạn có muốn xoá phần tử này?');
+		if(resultConfirm){
+			$(this).parents('.item-menu').parent('li.gradeA').remove();
+			$('.btn-submit-menu').trigger('click');
+		}
+		
+	})
+	if ($('.form-item-menu').length) {
+		$('.form-item-menu').slideUp('slow');
+	}
+	$('.btn-edit-menu').on('click',function(){
+		$(this).parents('.item-menu').find('.form-item-menu').slideToggle('slow');
+	});
 	submitUpload('form-upload','avatar');
 	submitUpload('form-upload','thumbnail');
 
@@ -176,4 +236,9 @@ $(document).ready(function(){
 
 	// })
 
+
+
+	/************* created menu ************/
+
+	onKeyupChange();
 });

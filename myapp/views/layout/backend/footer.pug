@@ -1,4 +1,5 @@
 script(src='/public/admin/vendor/jquery/jquery.min.js')
+script(src='/public/admin/dist/js/jquery-sortable.js')
 // Bootstrap Core JavaScript
 script(src='/public/admin/vendor/bootstrap/js/bootstrap.min.js')
 // Metis Menu Plugin JavaScript
@@ -8,4 +9,65 @@ script(src='/public/admin/vendor/raphael/raphael.min.js')
 script(src='/public/admin/vendor/morrisjs/morris.min.js')
 // Custom Theme JavaScript
 script(src='/public/admin/dist/js/sb-admin-2.js')
+script.
+	var oldContainer;
+	var group = $(".nested_with_switch").sortable({
+		group: 'nested',
+		afterMove: function (placeholder, container) {
+			//- if(oldContainer != container){
+			//- if(oldContainer)
+			//- 	oldContainer.el.removeClass("active");
+			//- container.el.addClass("active");
+
+			//- oldContainer = container;
+			//- }
+		},
+		onDrop: function ($item, container, _super) {
+			container.el.removeClass("active");
+			_super($item, container);
+		}
+		,
+
+		
+	});
+
+		$(".switch-container").on("click", ".switch", function  (e) {
+		var method = $(this).hasClass("active") ? "enable" : "disable";
+		$(e.delegateTarget).next().sortable(method);
+	});
+	$('.btn-submit-menu').on('click',function(){
+		var items = group.sortable("serialize")[0];
+
+		for (let i=0;i<items.length;i++){
+			if(items[i].name == ''||items[i].slug == ''){
+				items.splice(i);
+			}else{
+				if(items[i].children != undefined && items[i].children != null){
+					items[i].children = items[i].children[0]; 
+					for (let j=0;j<items[i].children.length;j++){
+						if(items[i].children[j].name ==''|| items[i].children[j].slug==''){
+							items[i].children.splice(j);
+						}
+					}
+				}else{
+					items[i].children = [];
+				}
+			}
+		}
+		items = JSON.stringify(items);
+
+		var dataFinal = JSON.stringify(group.sortable("serialize")[0]);
+		var ob= {
+			content :items
+		}
+		$.ajax({
+			url: '/admin/menu/save',
+			type: 'POST',
+			dataType: 'json',
+			data: ob
+		}).done(function(result) {
+			console.log(result);
+		});
+		 location.reload();
+	});
 script(src='/public/admin/dist/js/main.js')

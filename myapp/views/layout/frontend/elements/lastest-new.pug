@@ -8,18 +8,18 @@
 					img.img-fluid(src=linkUploadArticle+item.thumbnail, alt='')
 				ul.tags
 					li
-						a(href=linkCategorys+item.slug)=item.group.name
+						a(href=linkArticle+item.slug)=item.group.name
 			.col-lg-7.post-right
-				a(href=linkCategorys+item.slug)
+				a(href=linkArticle+item.slug)
 					h4
 						| #{item.name}
 				ul.meta
 					li
-						a(href=linkCategorys+item.slug)
+						a(href=linkArticle+item.slug)
 							span.lnr.lnr-user
 							| #{item.created.user_name}
 					li
-						a(href=linkCategorys+item.slug)
+						a(href=linkArticle+item.slug)
 							span.lnr.lnr-calendar-full
 								+get_the_date(item.created.time)
 				p.excert

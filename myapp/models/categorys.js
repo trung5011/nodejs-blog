@@ -48,7 +48,7 @@ module.exports = {
 	},
 	findSlug:(slugCategorys) => {
 		let am = {slug:slugCategorys};
-		return CategorysModel.find(am).select('_id');
+		return CategorysModel.find(am);
 	},
 
 	changeStatus:(currentStatus,id,options=null) =>{
@@ -123,6 +123,7 @@ module.exports = {
 					user_name:"admin",
 					time: Date.now()
 				}
+				
 			});
 		}
 	}

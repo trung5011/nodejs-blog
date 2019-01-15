@@ -9,16 +9,16 @@ section.top-post-area.pt-10
 				.top-post-details
 					ul.tags
 						li
-							a(href=linkCategorys+itemsSpecial[0].slug)=itemsSpecial[0].group.name
-					a(href=linkCategorys+itemsSpecial[0].slug)
+							a(href=linkArticle+itemsSpecial[0].slug)=itemsSpecial[0].group.name
+					a(href=linkArticle+itemsSpecial[0].slug)
 						h3=itemsSpecial[0].name
 					ul.meta
 						li
-							a(href=linkCategorys+itemsSpecial[0].slug)
+							a(href=linkArticle+itemsSpecial[0].slug)
 								span.lnr.lnr-user
 								| #{itemsSpecial[0].created.user_name}
 						li
-							a(href=linkCategorys+itemsSpecial[0].slug)
+							a(href=linkArticle+itemsSpecial[0].slug)
 								span.lnr.lnr-calendar-full
 									+get_the_date(itemsSpecial[0].created.time)
 			.col-lg-4.top-post-right
@@ -31,16 +31,16 @@ section.top-post-area.pt-10
 						.top-post-details
 							ul.tags
 								li
-									a(href=linkCategorys+itemsSpecial[i].slug)=itemsSpecial[i].group.name
-							a(href=linkCategorys+itemsSpecial[i].slug)
+									a(href=linkArticle+itemsSpecial[i].slug)=itemsSpecial[i].group.name
+							a(href=linkArticle+itemsSpecial[i].slug)
 								h4=itemsSpecial[i].name
 							ul.meta
 								li
-									a(href=linkCategorys+itemsSpecial[i].slug)
+									a(href=linkArticle+itemsSpecial[i].slug)
 										span.lnr.lnr-user
 										| #{itemsSpecial[i].created.user_name}
 								li
-									a(href=linkCategorys+itemsSpecial[i].slug)
+									a(href=linkArticle+itemsSpecial[i].slug)
 										span.lnr.lnr-calendar-full
 											+get_the_date(itemsSpecial[i].created.time)
 // End top-post Area

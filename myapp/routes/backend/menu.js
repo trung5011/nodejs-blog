@@ -32,7 +32,7 @@ router.get('/list(/:status)?', async function(req, res, next) {
 		totalItems:0,
 		currentPage:parseInt(ParamHelpers.getParam(req.query,'page',1)),
 		totalPages:0,
-		totalItemsPerPage:4,
+		totalItemsPerPage:10,
 		pageRanges:3
 	}
 	await MenuModel
@@ -40,7 +40,6 @@ router.get('/list(/:status)?', async function(req, res, next) {
 			params.pagination.totalItems = data;
 			params.pagination.totalPages = Math.ceil(params.pagination.totalItems/params.pagination.totalItemsPerPage);
 	});
-
 	MenuModel.listItems(params)
 		.then((items)=>{
 		res.render(`${folderView}/list`, { 
@@ -122,76 +121,22 @@ router.post('/save-ordering', function(req, res, next) {
 
 
 
-/************* form item ************/
-
-
-router.get('/form(/:id)?', function(req, res, next) {
-	let id 		= ParamHelpers.getParam(req.params,'id','');;
-	let item    = {
-		name:'',
-		status:'',
-		ordering:''
-	}
-	let errors = null;
-	if (id === ''){
-		res.render(`${folderView}/form`, { 
-			title: pageTitleAdd ,
-			item:item,
-			errors:errors
-		});
-	}else{
-		MenuModel.getItem(id).then((result) =>{
-			res.render(`${folderView}/form`, { 
-				title: pageTitleEdit ,
-				item:result,
-				errors:errors
-			});
-		});
-	}
-  });
-
 
 
 
 /************* add and edit item ************/
 
-router.post('/save', function(req, res, next) {
-	req.body = JSON.parse(JSON.stringify(req.body));
-
-	// validator
-	menuValidator.validator(req);
-	let item = Object.assign(req.body);
-	let errors = req.validationErrors();
-	let taskCurrent = (typeof item !== "undefined" && item.id !== "") ? "edit" : "add";
-	if (errors) {
-		let pageTitle = (taskCurrent == "add") ? pageTitleAdd : pageTitleEdit;
-		res.render(`${folderView}/form`, { 
-			title: pageTitle,
-			item:item,
-			errors:errors
-		});
-	}else{
-		let message = (taskCurrent == "add") ? notify.ADD_SUCCESS : notify.EDIT_SUCCESS;
-		MenuModel.saveItem(item,{task:taskCurrent}).then((result) =>{
-			req.flash('success', message);
-			res.redirect(link);
-		})
-	}
-
+router.post('/save',async function(req, res, next) {
+	await MenuModel.removeAll();
+	let item = JSON.parse(Object.assign(req.body.content));
+	console.log(item);
+	MenuModel.saveItem(item)
+	res.end();
 });
 
 
 
 
-
-/************* sort ************/
-
-router.get('/sort/:sort_field/:sort_type', function(req, res, next) {
-	req.session.sort_field 				= ParamHelpers.getParam(req.params,'sort_field','ordering');
-	req.session.sort_type				= ParamHelpers.getParam(req.params,'sort_type','asc');
-	
-	res.redirect(link);
-});
 
 
 

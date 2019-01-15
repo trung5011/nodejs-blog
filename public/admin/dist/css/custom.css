@@ -1,9 +1,14 @@
-
+input{
+	padding-left: 10px;
+}
 .ml-5{
 	margin-left: 5px!important;
 }
 .mr-5{
 	margin-left: 5px!important;
+}
+.mb-10{
+	margin-bottom: 10px!important;
 }
 .btn, .label{
 	margin-right: 10px;
@@ -36,7 +41,69 @@
 	margin-right: 5px;
 	vertical-align: middle
 }
-
+/************* .nested_with_switch.vertical ************/
+.nested_with_switch.vertical{
+	padding-left: 0;
+}
+.nested_with_switch.vertical li{
+	list-style: none;
+}
+.menu-item-col{
+	position: relative;
+}
+li.placeholder {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+li.placeholder:before {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    margin-top: -5px;
+    left: -5px;
+    top: -4px;
+    border: 5px solid transparent;
+    border-left-color: red;
+    border-right: none;
+}
+.form-item-menu__content{
+	display: inline-block;
+	margin-left: 15px;
+	margin-bottom: 10px;
+}
+.menu-name{
+	display: inline-block;
+	margin: 0;
+	margin-left: 10px;
+}
+.menu-item__btn{
+	position: absolute;
+	top: 50%;
+	right: 0px;
+	transform: translateY(-50%);
+	margin: 0;
+}
+input[type="number"]{
+	padding-left: 5px;
+}
+.form-item-menu {
+    margin-top: 15px;
+    border-top: 1px solid #c8c8c8c2;
+    padding-top: 15px;
+}
+.contentListUser .item-menu{
+	display: block;
+    margin: 5px;
+    border: 1px solid #cccccc;
+	color: #000;
+	text-transform: capitalize;
+	font-size: 16px;
+	background: #eeeeee;
+	padding: 10px;
+}
 /************* avatar ************/
 .img-avatar-form{
 	width:200px;

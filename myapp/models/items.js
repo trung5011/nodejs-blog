@@ -82,7 +82,7 @@ module.exports = {
 				user_name:"admin",
 				time: Date.now()
 			}
-			
+			console.log(item);
 			return new ItemsModel(item).save();
 		}
 		if(options.task === "edit") {

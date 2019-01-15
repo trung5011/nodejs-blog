@@ -40,7 +40,7 @@ module.exports = {
 			sort = {ordering:'asc'};
 		}
 		else if(option.task == 'items-in-categorys'){
-			find = (params.slug != '') ? {status:'active','group.id':params.id} : {status:'active'};
+			find = (params.slug != ''&& params.slug!=undefined ) ? {status:'active','group.id':params.id} : {status:'active'};
 			sort = {ordering:'asc'};
 		}
 		else if(option.task == 'items-random'){

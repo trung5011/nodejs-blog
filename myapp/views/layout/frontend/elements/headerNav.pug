@@ -39,18 +39,14 @@ header
 			.row.align-items-center.justify-content-between
 				nav#nav-menu-container
 					ul.nav-menu
-						li.menu-active
-							a(href='/') Home
-						li.menu-has-children
-							a(href=linkCategorys) Category
-							ul
-								each item in itemsCategorys
-									li
-										a(href=linkCategorys+item.slug)=item.name
-						li
-							a(href='') About
-						li
-							a(href='') Contact
+						each item in itemsCategorys
+							li
+								a(href='/'+item.slug)=item.name
+								-if( Array.isArray(item.children.length) || item.children.length)
+									ul
+										each child in item.children
+												li
+													a(href=linkCategorys+child.slug)=child.name
 				// #nav-menu-container
 				.navbar-right
 					form.Search

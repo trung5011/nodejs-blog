@@ -1,8 +1,9 @@
 var ArticleItemModel   = require(__path.__path_models+'article');
 var CategorysModel   = require(__path.__path_models+'categorys');
+var MenuModel   = require(__path.__path_models+'menu');
 var data = {
 	getSubCategorysMenu : async (req,res,next)=>{
-		await CategorysModel.listItemsFrontend(null,{task:'items-in-menu'}).then((items)=>{
+		await MenuModel.listItemsFrontend(null,{task:'items-in-menu'}).then((items)=>{
 			res.locals.itemsCategorys = items
 		});
 		next();

@@ -12,7 +12,7 @@ module.exports = {
 	
 		return MenuModel
 			.find(objwhere)
-			.select('name status ordering created modified')
+			.select()
 			.sort(sort)
 			.skip((params.pagination.currentPage-1)*params.pagination.totalItemsPerPage)
 			.limit(params.pagination.totalItemsPerPage)
@@ -75,28 +75,39 @@ module.exports = {
 			return MenuModel.update({_id:cids},data);
 		}
 	},
-	saveItem: (item,options = null) => {
-		if(options.task === "add"){
-			item.created = {
-				user_id:0,
-				user_name:"admin",
-				time: Date.now()
-			}
-			
-			return new MenuModel(item).save();
+	removeAll:()=>{
+		 return MenuModel.deleteMany();
+		 
+	},
+	listItemsFrontend:(params=null,option=null)=>{
+		let find = {};
+		let select = '';
+		let limit = '';
+		let sort = {};
+		if(option.task == "items-in-menu"){
+			find = {};
+			sort = {ordering:'asc'};
 		}
-		if(options.task === "edit") {
-			return MenuModel.updateOne({_id:item.id},{
-				name:item.name,
-				status:item.status,
-				ordering:parseInt(item.ordering),
-				content:item.content,
-				modified:{
-					user_id:0,
-					user_name:"admin",
-					time: Date.now()
+		else if(option.task == "items-categorys"){
+			find = {status:'active'};
+			sort = {'created.time':'desc'};
+		}
+		return MenuModel.find(find).select(select).limit(limit).sort(sort)	
+	},
+	saveItem:async (items) => {
+		
+		if(items.length>0){
+		
+
+			MenuModel.collection.insertMany(items,function(err){
+				if(err){
+					return console.log(err);
+				}
+				else{
+					console.log('da save database');
 				}
 			});
 		}
+		
 	}
 }

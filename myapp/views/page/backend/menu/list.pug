@@ -7,53 +7,17 @@ block content
 	-var collection = 'menu';
 	.row
 		.col-lg-12
-			h1.page-header Tables
+			h1.page-header Manage Menu
 	.row
 		.col-lg-12
 			//- div!=locals.flash
 			include ../../../layout/backend/elements/notification
-
-			.panel.panel-default
-				.panel-heading
-					| DataTables Advanced Tables
-				// /.panel-heading
-				.panel-body
-					#dataTables-example_wrapper.dataTables_wrapper.form-inline.dt-bootstrap.no-footer
-						.row
-							
-							.col-sm-6.status-list
-								#dataTables-example_length.dataTables_length
-									label
-										| Show 
-										select.form-control.input-sm(name='dataTables-example_length', aria-controls='dataTables-example')
-											option(value='10') 10
-											option(value='25') 25
-											option(value='50') 50
-											option(value='100') 100s
-										|  entries
-
-
-									//- filterStatusHelper
-									+filterStatusHelper(statusFilter,keyword,collection+'/list')
-
-
-							.col-sm-6.search-items
-								form(action='/'+system.prefixAdmin+'/'+collection+'/list/'+currentStatus ,method="GET")
-									.input-group
-										input(tyoe="text",class="form-control",name="keywords",placeholder="Search for....",value=keyword)
-										span.input-group-btn
-											button.btn.btn-info(type="submit")
-												| Search
-										span.input-group-btn
-											button.btn.btn-success(type=button)
-												a(href='/'+system.prefixAdmin+'/'+collection+'/'+currentStatus)
-													| Clear			
 			.panel.panel-default
 				.panel-heading
 					| List Menu
 				// /.panel-heading
 				.panel-body
-					form(role="form", class="form-ininline zt-form" , id="zt-form" action="", method="post")
+					form(role="form", class="form-ininline zt-form" , id="menu-form" action='/'+system.prefixAdmin+'/'+collection +'/save', method="post")
 
 
 						//- actionHelper
@@ -63,43 +27,61 @@ block content
 
 						#dataTables-example_wrapper.dataTables_wrapper.form-inline.dt-bootstrap.no-footer
 							.row
+								style.
+									body.dragging, body.dragging * {
+									cursor: move !important;
+									}
+
+									.dragged {
+									position: absolute;
+									opacity: 0.5;
+									z-index: 2000;
+									}
+
+									ol.example li.placeholder {
+									position: relative;
+									/** More li styles **/
+									}
+									ol.example li.placeholder:before {
+									position: absolute;
+									/** Define arrowhead **/
+									}
 								.col-sm-12
-									table#dataTables-example.text-center.table.table-striped.table-bordered.table-hover.dataTable.no-footer.dtr-inline(width='100%', role='grid', aria-describedby='dataTables-example_info', style='width: 100%;')
-										thead
-											tr(role='row').text-center
-												th.text-center(width="30px")
-													input.cbAll(type="checkbox", name="")
-												+sort(collection,'Name','name',sortField,sortType)
-												+sort(collection,'Status','status',sortField,sortType)
-												+sort(collection,'Ordering','ordering',sortField,sortType)
-												th.text-center Created
-												th.text-center Modified
-												th.sorting.text-center Action
-										tbody.contentListUser
+									ul.contentListUser.nested_with_switch.vertical
+										-if(!item)
 											each item in items
-												tr.gradeA.odd(role='row')
-													td
-														input(type="checkbox", name="cid", value=item.id)
-													td.sorting_1=item.name
-													td
-														//- | #{item.status}
-
-
-														//- statusHelper
-
-														+statusHelper(item.status,item.id,currentStatus,collection)
-
-
-
-													td
-														input.ordering.text-center(type="number", value=item.ordering)
-													td
-														+sourceByHelper(item.created.user_name,item.created.time)
-													td
-														+sourceByHelper(item.modified.user_name,item.modified.time)
-													td.text-center
-														a.btn.btn-warning(href='/'+system.prefixAdmin+'/'+collection+'/form/'+item.id) Edit
-														a.btn.btn-danger(href='/'+system.prefixAdmin+'/'+collection+'/delete/'+item.id, onclick="return confirm('bạn có muốn xoá phần tử này?');") Delete
-
+												li.gradeA.odd(role='row',data-name=(item.name)?item.name:'',data-slug=(item.slug)?item.slug:'')
+													.item-menu
+														.menu-item-col
+															p.menu-name=item.name
+															.menu-item__btn
+																span.btn.btn-primary.btn-edit-menu Edit
+																span.btn.btn-danger.btn-delete-menu Delete
+														.form-item-menu(style="display:none")
+															.form-item-menu__content
+																| Name : 
+																input(type="text",value=item.name,class="form-menu-name",name="menu_name",required)
+															.form-item-menu__content
+																| Slug : 
+																input(type="text",value=item.slug,class="form-menu-slug",name="menu_slug",required)
+													ul
+														-if(item.children != null&&item.children!=undefined)
+															each child in item.children
+																li.gradeA.odd(role='row',data-name=(child.name)?child.name:'',data-slug=(child.slug)?child.slug:'')
+																	.item-menu
+																		.menu-item-col
+																			p.menu-name=child.name
+																			.menu-item__btn
+																				span.btn.btn-primary.btn-edit-menu Edit
+																				span.btn.btn-danger.btn-delete-menu Delete
+																		.form-item-menu(style="display:none")
+																			.form-item-menu__content
+																				| Name : 
+																				input(type="text",value=child.name,class="form-menu-name",name="menu_name",required)
+																			.form-item-menu__content
+																				| Slug : 
+																				input(type="text",value=child.slug,class="form-menu-slug",name="menu_slug",required)
+													//- div.menu-item-col
+													//- 	a.btn.btn-danger(href='/'+system.prefixAdmin+'/'+collection+'/delete/'+item.id, onclick="return confirm('bạn có muốn xoá phần tử này?');") Delete
 							//- pagination
 							+pagination(pagination,collection+'/list',currentStatus,keyword)

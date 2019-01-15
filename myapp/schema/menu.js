@@ -4,11 +4,9 @@ var schema = new mongoose.Schema(
 	{ 
 		name: String,
 		status: String,
-		ordering: Number,
 		slug:String,
-		thumbnail:String,
 		subMenu:String,
-		excert:String,
+		children:Array,
 		created :{
 			user_id: Number,
 			user_name:String,
