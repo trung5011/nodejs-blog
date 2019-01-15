@@ -54,7 +54,7 @@ var indexRouter = require(__path.__path_routes+'frontend/index');
 /************* connect database ************/
 
 // mongoose.connect('mongodb://127.0.0.1/demo', { useNewUrlParser: true });
-mongoose.connect('mongodb://thanhtrung1:toaye11@ds145184.mlab.com:45184/nodejs-test', { useNewUrlParser: true });
+mongoose.connect('mongodb://nodejsnews:thanhtrung5011@ds253468.mlab.com:53468/nodejs-news', { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on('error',() =>{
 	console.log('connection error123');
