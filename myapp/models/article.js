@@ -21,40 +21,7 @@ module.exports = {
 			.skip((params.pagination.currentPage-1)*params.pagination.totalItemsPerPage)
 			.limit(params.pagination.totalItemsPerPage)
 	},
-	listItemsFrontend:(params=null,option=null,itemslimit=null) =>{
-		let find = {};
-		let select = 'name slug group created.user_name created.time thumbnail content excert';
-		let limit =  (itemslimit!=null&&itemslimit!=undefined) ? Number(itemslimit) : 5 ;
-		let sort = {};
-		if(option.task == "items-special"){
-			find = {status:'active',special:'active'};
-			sort = {ordering:'asc'};
-		}
-		else if(option.task == "items-news"){
-			find = {status:'active'};
-			sort = {'created.time':'desc'};
-		}
-		
-		else if(option.task == 'items-other'){
-			find = {status:'active','_id':{$ne:params.id},'group.id':params.group.id}
-			sort = {ordering:'asc'};
-		}
-		else if(option.task == 'items-in-categorys'){
-			find = (params.slug != ''&& params.slug!=undefined ) ? {status:'active','group.id':params.id} : {status:'active'};
-			sort = {ordering:'asc'};
-		}
-		else if(option.task == 'items-random'){
-			return 	ArticleItemModel.aggregate([
-				{$match:{status:'active'}},
-				{$project:{_id:0,name:1,created:1,thumbnail:1}},
-				{$sample:{size:limit}}
-			]);
-
-		}
-
-		return ArticleItemModel.find(find).select(select).limit(limit).sort(sort)
-	},
-
+	
 	getItem:(id,option=null) =>{
 		return ArticleItemModel.findById(id);
 	},
@@ -196,5 +163,45 @@ module.exports = {
 					}
 				});
 			}
-	}
+	},
+	/************* api ************/
+	getItemApi:(id=null,option=null) =>{
+		return ArticleItemModel.find(id);
+	},
+
+	/************* front-end ************/
+	listItemsFrontend:(params=null,option=null,itemslimit=null) =>{
+		let find = {};
+		let select = 'name slug group created.user_name created.time thumbnail content excert';
+		let limit =  (itemslimit!=null&&itemslimit!=undefined) ? Number(itemslimit) : 5 ;
+		let sort = {};
+		if(option.task == "items-special"){
+			find = {status:'active',special:'active'};
+			sort = {ordering:'asc'};
+		}
+		else if(option.task == "items-news"){
+			find = {status:'active'};
+			sort = {'created.time':'desc'};
+		}
+		
+		else if(option.task == 'items-other'){
+			find = {status:'active','_id':{$ne:params.id},'group.id':params.group.id}
+			sort = {ordering:'asc'};
+		}
+		else if(option.task == 'items-in-categorys'){
+			find = (params.slug != ''&& params.slug!=undefined ) ? {status:'active','group.id':params.id} : {status:'active'};
+			sort = {ordering:'asc'};
+		}
+		else if(option.task == 'items-random'){
+			return 	ArticleItemModel.aggregate([
+				{$match:{status:'active'}},
+				{$project:{_id:0,name:1,created:1,thumbnail:1}},
+				{$sample:{size:limit}}
+			]);
+
+		}
+
+		return ArticleItemModel.find(find).select(select).limit(limit).sort(sort);
+	},
+	
 }

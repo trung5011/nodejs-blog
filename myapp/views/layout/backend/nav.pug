@@ -13,7 +13,7 @@ nav.navbar.navbar-default.navbar-static-top(role='navigation', style='margin-bot
 			a.dropdown-toggle(data-toggle='dropdown', href='#')
 				i.fa.fa-user.fa-fw
 				i.fa.fa-caret-down
-				span.ml-5#user-locals #{user.user_name}
+				span.ml-5#user-locals=user.user_name
 			ul.dropdown-menu.dropdown-user
 				li
 					a(href='#')
@@ -47,10 +47,10 @@ nav.navbar.navbar-default.navbar-static-top(role='navigation', style='margin-bot
 						i.fa.fa-dashboard.fa-fw
 						|  Dashboard
 				
-				li
-					a(href='/'+system.prefixAdmin+'/items/list')
-						i.fa.fa-table.fa-fw
-						|  List
+				//- li
+				//- 	a(href='/'+system.prefixAdmin+'/items/list')
+				//- 		i.fa.fa-table.fa-fw
+				//- 		|  List
 				-if(permission == 'yes')		
 					li
 						a(href='/'+system.prefixAdmin+'/menu/list')
@@ -87,7 +87,22 @@ nav.navbar.navbar-default.navbar-static-top(role='navigation', style='margin-bot
 						li
 							a(href='/'+system.prefixAdmin+'/article/list')
 								i.fa.fa-angle-double-right.fa-fw
-								| Article							
-				
-						
-				
+								| Article
+				li
+					a(href='#')
+						i.fa.fa-file.fa-fw
+						| Manage Page
+						span.fa.arrow
+					ul.nav.nav-second-level.collapse.on(aria-expande="true" style="")
+						li
+							a(href='/'+system.prefixAdmin+'/page/template')
+								i.fa.fa-angle-double-right.fa-fw
+								| Template
+						li
+							a(href='/'+system.prefixAdmin+'/page/list')
+								i.fa.fa-angle-double-right.fa-fw
+								| Page
+				li
+					a(href='/'+system.prefixAdmin+'/settings')
+						i.fa.fa-cog.fa-fw
+						| Settings

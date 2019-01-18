@@ -1,0 +1,51 @@
+
+extends ../../../layout/backend/layout
+block content
+	//- include ../../../layout/backend/helpers/status
+	-var collection = 'settings';
+	.row
+		.col-lg-12
+			h1.page-header=title
+	.row
+		.col-lg-12
+			div!=locals.flash
+			.panel.panel-default
+				.panel-heading
+					| Form
+				// /.panel-heading
+				.panel-body
+					//- .row
+					//- 	.col-lg-6
+					//- 		include ../../../layout/backend/elements/errors
+					//- 		+errors(errors)
+					.row
+						.col-lg-8
+							form(role="form", action='/'+system.prefixAdmin+'/'+collection+'/save' method="POST" , enctype="multipart/form-data")
+								.form-group
+									label Logo
+									-var linklogo = '/public/uploads/article/'+item.logo;
+									input.form-control.data-logo(type="file",name="logo")
+									img(src=(item!=undefined)?linklogo:'', alt="")
+								.form-group
+									label Số Điện Thoại
+									input.form-control(name="sdt",type="text", value=(item!=undefined)?item.sdt:'')
+								.form-group
+									label link Socials
+									ul.list-form-socials
+										li
+											input.form-control(name="facebook",type="text", value=(item!=undefined)?item.linkSocial.facebook:'',placeholder="facebook")
+										li
+											input.form-control(name="twitter",type="text", value=(item!=undefined)?item.linkSocial.twitter:'',placeholder="twitter")
+										li
+											input.form-control(name="skype",type="text", value=(item!=undefined)?item.linkSocial.skype:'',placeholder="skype")
+										li
+											input.form-control(name="google",type="text", value=(item!=undefined)?item.linkSocial.google:'',placeholder="google")
+								.form-group
+									label Email
+									input(class="form-control", name="email",value=(item!=undefined)?item.email:'', type="email", placeholder="email")
+								.form-group
+									label Copy Right
+									input(class="form-control", name="copyright",value=(item!=undefined)?item.copyright:'', type="text", placeholder="copy right")
+								button(type="submit", class="btn btn-primary")
+									| save
+								a(type="button", href='/'+system.prefixAdmin+'/admin',class="btn btn-default") Cancel

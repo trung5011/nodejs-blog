@@ -17,6 +17,7 @@ router.use('/'
 			,middewareData.getSubCategorysMenu
 			,middewareData.getItemRandom
 			,middewareData.getItemSpecial
+			,middewareData.getSettings
 			,homeRouter);
 router.use('/categorys', categorysRouter);
 router.use('/article', singleRouter);

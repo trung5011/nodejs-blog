@@ -217,8 +217,8 @@ router.post('/save',  function(req, res, next) {
 
 
 		let item = Object.assign(req.body);
-		let taskCurrent = (typeof item !== "undefined" && item.id !== "") ? "edit" : "add";
 
+		let taskCurrent = (typeof item !== "undefined" && item.id !== "") ? "edit" : "add";
 		item.group = {
 			id:'',
 			name:'',
@@ -240,7 +240,8 @@ router.post('/save',  function(req, res, next) {
 				id:item.categorys_id,
 				name:item.categorys_name,
 				slug:StringHelper.createAlias(item.categorys_name)
-			};		
+			};
+
 			if(taskCurrent == 'edit') item.thumbnail = item.image_old;
 			res.render(`${folderView}/form`, { 
 				title: pageTitle ,

@@ -111,3 +111,10 @@ input[type="number"]{
 .img-avatar{
 	width: 80px;
 }
+
+
+
+.list-form-socials li{
+	list-style: none;
+	margin-bottom: 10px;
+}

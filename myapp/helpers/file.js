@@ -7,8 +7,6 @@ var fs 				= require('fs');
 
 
 let uploadFile = (field,folderDes = 'users',fileNameLength = 10,fileSizeMb = 5,fileExtension ='jpeg|jpg|png|gif') =>{
-
-
 	var storage = multer.diskStorage({
 		destination: function (req, file, cb) {
 		  cb(null, __path.__path_uploads+folderDes+'/')

@@ -13,6 +13,7 @@ var categorysRouter = require('./categorys');
 var postsRouter = require('./post-items');
 var articleRouter = require('./article');
 var menuRouter = require('./menu');
+var settingsRouter = require('./settings');
 var ParamHelpers = require(__path.__path_helpers+'params');
 
 /************* module ************/
@@ -51,6 +52,7 @@ router.use('/post-items', postsRouter);
 router.use('/categorys', categorysRouter);
 router.use('/article', articleRouter);
 router.use('/menu', menuRouter);
+router.use('/settings', settingsRouter);
 
 router.use('/uploads', async function(req, res, next) {
 	UploadThumbnail (req,res, async (err) => {

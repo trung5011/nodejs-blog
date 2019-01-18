@@ -40,6 +40,7 @@ global.__path = {
 
 const systemConfig = require(__path.__path_configs + 'systems');
 var indexAdminRouter = require(__path.__path_routes+'backend/index');
+var ApiRouter = require(__path.__path_routes+'backend/api/version-1');
 var indexRouter = require(__path.__path_routes+'frontend/index');
 
 
@@ -160,6 +161,7 @@ app.locals.moment = moment;
 
 app.use(`/${systemConfig.prefixAdmin}`, indexAdminRouter);
 app.use(`(/${systemConfig.prefixBlog})?`, indexRouter);
+app.use(`(/${systemConfig.prefixApi})?`, ApiRouter);
 
 
 /************* catch 404 and forward to error handler  ************/
