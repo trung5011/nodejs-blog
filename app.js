@@ -34,7 +34,8 @@ global.__path = {
 	__path_uploads:__base+'public/' + pathFolder.folder_uploads + '/',
 }
 
-
+/************* model ************/
+var UsersModel   		= require(__path.__path_schema+'users');
 
 
 
@@ -42,6 +43,7 @@ const systemConfig = require(__path.__path_configs + 'systems');
 var indexAdminRouter = require(__path.__path_routes+'backend/index');
 var ApiRouter = require(__path.__path_routes+'backend/api/version-1');
 var indexRouter = require(__path.__path_routes+'frontend/index');
+var configsRouter = require(__path.__path_routes+'backend/configs');
 
 
 
@@ -54,8 +56,8 @@ var indexRouter = require(__path.__path_routes+'frontend/index');
 
 /************* connect database ************/
 
-// mongoose.connect('mongodb://127.0.0.1/demo', { useNewUrlParser: true });
-mongoose.connect('mongodb://nodejsnew:thanhtrung5011@ds253468.mlab.com:53468/nodejs-news', { useNewUrlParser: true });
+mongoose.connect('mongodb://127.0.0.1/demo', { useNewUrlParser: true });
+// mongoose.connect('mongodb://nodejsnew:thanhtrung5011@ds253468.mlab.com:53468/nodejs-news', { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on('error',() =>{
 	console.log('connection error123');
@@ -165,12 +167,22 @@ app.locals.system = systemConfig;
 app.locals.moment = moment;
 
 
+/************* router ************/
+app.use(`(/${systemConfig.prefixConfigs})?`, configsRouter);
 
+var checkUserEmpty = async (req,res,next) => {
+	UsersModel.count().then((items)=>{
+		if(items>0){
+			next();
+		}else{
+			res.redirect('/configs')
+		}
+	});
+}
 
 app.use(`/${systemConfig.prefixAdmin}`, indexAdminRouter);
-app.use(`(/${systemConfig.prefixBlog})?`, indexRouter);
+app.use(`(/${systemConfig.prefixBlog})?`,checkUserEmpty, indexRouter);
 app.use(`(/${systemConfig.prefixApi})?`, ApiRouter);
-
 
 /************* catch 404 and forward to error handler  ************/
 

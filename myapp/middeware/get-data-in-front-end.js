@@ -29,7 +29,7 @@ var data = {
 	},
 	getSettings:async (req,res,next)=>{
 		await SettingsModel.listItems().then((items)=>{
-			res.locals.settings = items[0]
+			res.locals.settings = (items[0]!= null&& items[0]!= undefined) ? items[0] : '';
 		});
 		next();
 	}

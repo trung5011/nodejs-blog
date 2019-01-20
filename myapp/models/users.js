@@ -1,6 +1,7 @@
 var UsersModel 		= require(__path.__path_schema + 'users');
 var FileHelper   		= require(__path.__path_helpers+'file');
 var folderUpload = 'public/uploads/users/';
+var md5 				= require('md5');
 
 
 module.exports = {
@@ -144,5 +145,26 @@ module.exports = {
 					}
 				});
 			}
-	}
+	},
+	saveItemConfigs: (item,options=null) =>{
+		let items = {
+			name:item.user_name,
+			status:'active',
+			ordering:1,
+			content:'',
+			avatar:item.avatar,
+			user_name:item.user_name,
+			pass_word:md5(item.pass_word),
+			modified:{
+				user_id:0,
+				user_name:"admin",
+				time: Date.now()
+			},
+			group : {
+				id:'5c150d5da7d2750bd051ba98',
+				name:'admin'
+			}
+		}
+		return new UsersModel(items).save();
+	},
 }

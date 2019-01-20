@@ -67,7 +67,6 @@ router.use('/delete/:name', async function(req, res, next) {
 	var folderUpload = 'public/uploads/article/';
 	FileHelper.removeFile(folderUpload,name);
 	res.redirect(req.get('referer'));
-	console.log(name);
 });
 
 module.exports = router;

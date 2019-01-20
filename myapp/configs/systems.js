@@ -4,6 +4,6 @@ module.exports = {
 	format_time_frontend : 'DD-MM-YYYY',
 	prefixBLog:'',
 	prefixApi:'api',
+	prefixConfigs:'configs',
 	env:'production',
-	
 }
