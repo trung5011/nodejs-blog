@@ -114,5 +114,42 @@ module.exports = {
 				}
 			});
 		}
+	},
+	saveItemConfigs: async (item,options=null) =>{
+		let items = {
+			name:item.group,
+			status:'active',
+			ordering:1,
+			content:'',
+			group_acp:'yes',
+			created :{
+				user_id: 0,
+				user_name:"admin",
+				time:Date.now()
+			},
+			modified:{
+				user_id:0,
+				user_name:"admin",
+				time: Date.now()
+			},
+		
+		}
+		let flag;
+		let itemold;
+		await GroupsModel.find({name:item.group}).then((results)=>{
+			if(results.length > 0){
+				itemold = results;
+				flag = false;
+			}else{
+				flag = true;
+			}
+		})
+		if(flag == false){
+			return itemold[0];
+		}else{
+			return new GroupsModel(items).save();
+
+		}
+
 	}
 }

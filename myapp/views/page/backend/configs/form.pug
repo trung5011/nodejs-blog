@@ -20,6 +20,9 @@ block content
 					//- 		+errors(errors)
 					.row
 						.col-lg-8
+							include ../../../layout/backend/elements/errors
+							+errors(errors)
+							
 							form(role="form", action='/'+collection+'/save' method="POST" , enctype="multipart/form-data")
 								.form-group
 									label Avatar
@@ -27,14 +30,17 @@ block content
 									input.form-control.data-logo(type="file",name="avatar")
 									//- img(src=(item!=undefined)?linkavatar:'', alt="")
 								.form-group
+									label Groups User
+									input.form-control(name="group",type="text",placeholder="Groups User", require)
+								.form-group
 									label User
-									input.form-control(name="user_name",type="text", value=(item!=undefined)?item.sdt:'',placeholder="User")
+									input.form-control(name="username",type="text",placeholder="User",require)
 								.form-group
 									label Passwords
-									input.form-control(name="pass_word",type="passwords", value=(item!=undefined)?item.sdt:'',placeholder="Passwords")
+									input.form-control(name="password",type="password",placeholder="Passwords",require)
 								.form-group
 									label Email
-									input(class="form-control", name="email",value=(item!=undefined)?item.email:'', type="email", placeholder="Email")
+									input(class="form-control", name="email", type="email", placeholder="Email",require)
 								button(type="submit", class="btn btn-primary")
 									| save
 								a(type="button", href='/'+system.prefixAdmin+'/admin',class="btn btn-default") Cancel

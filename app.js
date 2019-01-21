@@ -179,9 +179,8 @@ var checkUserEmpty = async (req,res,next) => {
 		}
 	});
 }
-
-app.use(`/${systemConfig.prefixAdmin}`, indexAdminRouter);
 app.use(`(/${systemConfig.prefixBlog})?`,checkUserEmpty, indexRouter);
+app.use(`/${systemConfig.prefixAdmin}`, indexAdminRouter);
 app.use(`(/${systemConfig.prefixApi})?`, ApiRouter);
 
 /************* catch 404 and forward to error handler  ************/

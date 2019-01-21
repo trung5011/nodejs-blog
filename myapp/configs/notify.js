@@ -11,6 +11,10 @@ module.exports = {
 	EDIT_SUCCESS:'Cật nhật item thành công',
 	ERROR_LOGIN_EXITS:'User hoặc mật khẩu không đúng',
 	ERROR_USER_EXITS:'User không tồn tại',
+	GROUP_NAME_CONFIGS:'Chiều dài từ %d đến %d ký tự',
+	USER_NAME_CONFIGS:'Chiều dài từ %d đến %d ký tự',
+	PASS_WORD_CONFIGS:'Chiều dài từ %d đến %d ký tự',
+	EMAIL_CONFIGS:'Email không hợp lệ',
 	VALIDATES:{
 		ERROR_NAME: 'Chiều dài từ %d đến %d ký tự',
 		ERROR_ORDERING:'Phải là số nguyên lớn hơn %d và nhỏ hơn %d ',

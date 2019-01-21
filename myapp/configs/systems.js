@@ -5,5 +5,5 @@ module.exports = {
 	prefixBLog:'',
 	prefixApi:'api',
 	prefixConfigs:'configs',
-	env:'production',
+	env:'dev',
 }
