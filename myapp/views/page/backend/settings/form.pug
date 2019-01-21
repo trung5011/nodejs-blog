@@ -23,9 +23,9 @@ block content
 							form(role="form", action='/'+system.prefixAdmin+'/'+collection+'/save' method="POST" , enctype="multipart/form-data")
 								.form-group
 									label Logo
-									-var linklogo = '/public/uploads/article/'+item.logo;
+									-var linklogo = item!=undefined?item.logo:'';
 									input.form-control.data-logo(type="file",name="logo")
-									img(src=(item!=undefined)?linklogo:'', alt="")
+									img(src='/public/uploads/article/'+linklogo, alt="")
 								.form-group
 									label Số Điện Thoại
 									input.form-control(name="sdt",type="text", value=(item!=undefined)?item.sdt:'')
