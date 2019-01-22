@@ -13,7 +13,7 @@ nav.navbar.navbar-default.navbar-static-top(role='navigation', style='margin-bot
 			a.dropdown-toggle(data-toggle='dropdown', href='#')
 				i.fa.fa-user.fa-fw
 				i.fa.fa-caret-down
-				span.ml-5#user-locals=user.user_name
+				span.ml-5#user-locals=(user!=undefined)?user.user_name:''
 			ul.dropdown-menu.dropdown-user
 				li
 					a(href='#')
@@ -81,9 +81,9 @@ nav.navbar.navbar-default.navbar-static-top(role='navigation', style='margin-bot
 								i.fa.fa-angle-double-right.fa-fw
 								| Category
 						li
-							a(href='/'+system.prefixAdmin+'/post-items/list')
+							a(href='/'+system.prefixAdmin+'/domain/list')
 								i.fa.fa-angle-double-right.fa-fw
-								| Post
+								| Domain
 						li
 							a(href='/'+system.prefixAdmin+'/article/list')
 								i.fa.fa-angle-double-right.fa-fw

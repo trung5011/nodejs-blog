@@ -56,11 +56,15 @@ block content
 									label Categorys
 									+selectBoxHelper('categorys_id','Categorys',categorysItems,item.group.id)
 								.form-group
+									label Domain
+									+selectBoxHelper('domain_id','Domain',domainItems,item.domain.id)
+								.form-group
 									label Content
 									textarea.form-control(id='form-ckeditor',name='content' , row='3')=item.content
 								input(class="form-control", name="id", value=item.id, type="hidden")
 								input(class="form-control", name="image_old", value=item.thumbnail, type="hidden")
 								input(class="form-control name-id", name="categorys_name", value='', type="hidden")
+								input(class="form-control name-id", name="domain_name", value='', type="hidden")
 								button(type="submit", class="btn btn-primary")
 									| Submit
 								a(type="button", href='/'+system.prefixAdmin+'/'+collection+'/list',class="btn btn-default") Cancel

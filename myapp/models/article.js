@@ -130,6 +130,11 @@ module.exports = {
 				name:item.categorys_name,
 				slug:StringHelper.createAlias(item.categorys_name)
 			}
+			item.domain = {
+				id:item.domain_id,
+				name:item.domain_name,
+				slug:StringHelper.createAlias(item.domain_name)
+			}
 			return new ArticleItemModel(item).save();
 		}
 		// edit item in forms
@@ -152,6 +157,11 @@ module.exports = {
 					id:item.categorys_id,
 					name:item.categorys_name,
 					slug:StringHelper.createAlias(item.categorys_name)
+				},
+				domain : {
+					id:item.domain_id,
+					name:item.domain_name,
+					slug:StringHelper.createAlias(item.domain_name)
 				}
 			});
 		}
@@ -159,14 +169,27 @@ module.exports = {
 			if(options.task === "change-categorys-name") {
 				return ArticleItemModel.updateMany({'group.id':item.id},{
 					group : {
-						name:item.category_id,
+						name:item.name,
+					}
+				});
+			}
+			// edit item in form
+			if(options.task === "change-domain") {
+				return ArticleItemModel.updateMany({'domain.id':item.id},{
+					domain : {
+						name:item.name,
 					}
 				});
 			}
 	},
 	/************* api ************/
-	getItemApi:(id=null,option=null) =>{
+	getItemApi:(id,option=null) =>{
 		return ArticleItemModel.find(id);
+	},
+	getItemApiDomain:(id,option=null) =>{
+		let objwhere={};
+		objwhere['domain.id'] = id;
+		return ArticleItemModel.find(objwhere).select();
 	},
 
 	/************* front-end ************/

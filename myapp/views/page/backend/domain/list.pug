@@ -1,15 +1,11 @@
 
 extends ../../../layout/backend/layout
 block content
-	include ../../../layout/backend/helpers/status
-	include ../../../layout/backend/helpers/special
+	//- include ../../../layout/backend/helpers/status
 	include ../../../layout/backend/helpers/source-by
 	include ../../../layout/backend/helpers/sort
-	include ../../../layout/backend/helpers/selectbox
-	include ../../../layout/backend/helpers/image
-
-	-var collection = 'article';
-	-var folderUpload = '/public/uploads/article/';
+	-var collection = 'domain';
+	-var linkForm = 'domain/form/';
 
 	.row
 		.col-lg-12
@@ -41,9 +37,8 @@ block content
 									//- filterStatusHelper
 									+filterStatusHelper(statusFilter,keyword,collection+'/list')
 
-							.col-sm-2
-								+selectBoxHelper('filter_group','Categorys',categorysItems,categorys_id)
-							.col-sm-4.search-items
+
+							.col-sm-6.search-items
 								form(action='/'+system.prefixAdmin+'/'+collection+'/list/'+currentStatus ,method="GET")
 									.input-group
 										input(tyoe="text",class="form-control",name="keywords",placeholder="Search for....",value=keyword)
@@ -61,9 +56,10 @@ block content
 				.panel-body
 					form(role="form", class="form-ininline zt-form" , id="zt-form" action="", method="post")
 
+
 						//- actionHelper
 						include ../../../layout/backend/helpers/action
-						+actionHelper(collection,true)
+						+actionHelper(collection)
 
 
 						#dataTables-example_wrapper.dataTables_wrapper.form-inline.dt-bootstrap.no-footer
@@ -75,39 +71,35 @@ block content
 												th.text-center(width="30px")
 													input.cbAll(type="checkbox", name="")
 												+sort(collection,'Name','name',sortField,sortType)
-												th.text-center Avatar
 												+sort(collection,'Status','status',sortField,sortType)
-												+sort(collection,'Special','special',sortField,sortType)
 												+sort(collection,'Ordering','ordering',sortField,sortType)
-												+sort(collection,'Categorys','categorys.name',sortField,sortType)
-												+sort(collection,'Domain','domain.name',sortField,sortType)
-												th.text-center Created
-												//- th.text-center Modified
-												th.sorting.text-center(width="20%") Action
+												+sort(collection,'Slug','slug',sortField,sortType)
+												//- th.text-center Created
+												th.text-center ID
+												th.text-center Modified
+												th.sorting.text-center Action
 										tbody
-											
 											each item in items
 												tr.gradeA.odd(role='row')
 													td
 														input(type="checkbox", name="cid", value=item.id)
 													td.sorting_1=item.name
 													td
-														+imageHelpder(folderUpload,item.thumbnail,item.name)
-													td
+														//- | #{item.status}
+
+
 														//- statusHelper
+
 														+statusHelper(item.status,item.id,currentStatus,collection)
-													td
-														//- specialHelper
-														+specialHelper(item.special,item.id,currentSpecial,collection)
 
 
 
 													td
-														input.ordering.text-center(type="number", value=item.ordering,style="width:30px")
+														input.ordering.text-center(type="number", value=item.ordering)
 													td
-														| #{item.group.name}
+														| #{item.slug}
 													td
-														| #{item.domain.name}	
+														| #{item._id}	
 													td
 														+sourceByHelper(item.created.user_name,item.created.time)
 													//- td

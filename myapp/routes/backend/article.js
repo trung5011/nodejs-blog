@@ -2,6 +2,7 @@ var express      = require('express');
 var router       = express.Router();
 var ArticleItemModel   = require(__path.__path_models+'article');
 var CategorysModel   = require(__path.__path_models+'categorys');
+var DomainModel   = require(__path.__path_models+'domain');
 var notify   = require(__path.__path_configs+'notify');
 var FileHelper   		= require(__path.__path_helpers+'file');
 var StringHelper   		= require(__path.__path_helpers+'string');
@@ -32,7 +33,6 @@ router.get('/list(/:status)?', async function(req, res, next) {
 	params.sortField 		= ParamHelpers.getParam(req.session,'sort_field','oreding');
 	params.sortType 		= ParamHelpers.getParam(req.session,'sort_type','asc');
 	params.categorys_id 		= ParamHelpers.getParam(req.session,'categorys_id','');
-	
 	// pagination
 	params.pagination = {
 		totalItems:0,
@@ -48,7 +48,10 @@ router.get('/list(/:status)?', async function(req, res, next) {
 				categorysItems = items;
 			});
 
-	
+	let domainItems = [];
+	await DomainModel.listItemsInSelectbox().then((items)=>{
+		domainItems = items;
+	});
 	await ArticleItemModel
 		.countItem(params).then((data)=>{
 		params.pagination.totalItems = data;
@@ -68,7 +71,8 @@ router.get('/list(/:status)?', async function(req, res, next) {
 			sortField:params.sortField,
 			sortType:params.sortType,
 			categorysItems:categorysItems,
-			categorys_id:params.categorys_id
+			categorys_id:params.categorys_id,
+			domainItems:domainItems
 		});
 	})
 });
@@ -185,6 +189,10 @@ router.get('/form(/:id)?', async function(req, res, next) {
 	await CategorysModel.listItemsInSelectbox().then((items)=>{
 		categorysItems = items;
 	});
+	let domainItems = [];
+	await DomainModel.listItemsInSelectbox().then((items)=>{
+		domainItems = items;
+	});
 			
 
 	if (id === ''){
@@ -192,7 +200,8 @@ router.get('/form(/:id)?', async function(req, res, next) {
 			title: pageTitleAdd ,
 			item:item,
 			errors:errors,
-			categorysItems:categorysItems
+			categorysItems:categorysItems,
+			domainItems:domainItems,
 		});
 	}else{
 		ArticleItemModel.getItem(id).then((result) =>{
@@ -200,7 +209,8 @@ router.get('/form(/:id)?', async function(req, res, next) {
 				title: pageTitleEdit ,
 				item:result,
 				errors:errors,
-				categorysItems:categorysItems
+				categorysItems:categorysItems,
+				domainItems:domainItems,
 			});
 		});
 	}
@@ -236,6 +246,10 @@ router.post('/save',  function(req, res, next) {
 					.then((items)=>{
 						categorysItems = items;
 					});
+			let domainItems = [];
+			await DomainModel.listItemsInSelectbox().then((items)=>{
+				domainItems = items;
+			});		
 			item.group = {
 				id:item.categorys_id,
 				name:item.categorys_name,
@@ -247,11 +261,12 @@ router.post('/save',  function(req, res, next) {
 				title: pageTitle ,
 				item:item,
 				errors:errors,
-				categorysItems:categorysItems
+				categorysItems:categorysItems,
+				domainItems : domainItems,
 			});
 		}else{
 			let message = (taskCurrent == "add") ? notify.ADD_SUCCESS : notify.EDIT_SUCCESS;
-			if(req.file == undefined ){ // user no edit avatar
+			if(req.file == undefined ){ // user no edit thumbnail
 				item.thumbnail = item.image_old;
 			}else{ // user edit thumbnail
 				item.thumbnail = req.file.filename;

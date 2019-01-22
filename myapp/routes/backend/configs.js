@@ -34,7 +34,7 @@ var linkConfigs = `/${systemConfig.prefixAdmin}/configs`;
 
 router.get('/', function(req, res, next) {
 	let errors = null;
-	UsersModelSchema.count().then((items)=>{
+	UsersModelSchema.countDocuments().then((items)=>{
 		if(items>0){
 			res.redirect(link);
 

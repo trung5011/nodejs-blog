@@ -155,7 +155,18 @@ var onKeyupChange = function(){
 			mainLi.attr('data-slug',content);
 	})
 }
+var changeInputHidden = function(selector,inputHidden){
+	$(selector).each(function(){
+		$(inputHidden).val($(this).find('option:selected').text());
+		$(selector).change(function(){
+			$(inputHidden).val($(this).find('option:selected').text());
+		});
+	});
+}
 $(document).ready(function(){
+
+	changeInputHidden('select.id-name[name="categorys_id"]','input.name-id[name="categorys_name"]');
+	changeInputHidden('select.id-name[name="domain_id"]','input.name-id[name="domain_name"]');
 	var ckbAll = $('.cbAll');
 	var fmAdmin = $('#zt-form');
 
@@ -182,17 +193,12 @@ $(document).ready(function(){
 		}
 	})
 
-	$('select.id-name').each(function(){
-		$('input.name-id').val($(this).find('option:selected').text());
-		$('select.id-name').change(function(){
-			$('input.name-id').val($(this).find('option:selected').text());
-		});
-	});
+	
 
 
 	$('select[name="filter_group"]').change(function(){
 		var path = window.location.pathname.split('/');
-		var linkRedirect = '/' + path[1] + '/' + path[2] + '/filter-group/' + $(this).val();
+		var linkRedirect = '/' + path[1] + '/' + path[2] + '/filter-categorys/' + $(this).val();
 		window.location.pathname = linkRedirect;
 	});
 

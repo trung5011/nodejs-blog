@@ -1,17 +1,17 @@
 var express      = require('express');
 var router       = express.Router();
-var CategorysModel   = require(__path.__path_models+'categorys');
+var DomainModel   = require(__path.__path_models+'domain');
 var ArticleModel   = require(__path.__path_models+'article');
 var notify   = require(__path.__path_configs+'notify');
-var categorysValidator   = require(__path.__path_validates+'categorys');
+var domainValidator   = require(__path.__path_validates+'domain');
 var UtilsHelpers = require(__path.__path_helpers+'utils');
 var ParamHelpers = require(__path.__path_helpers+'params');
 var systemConfig = require(__path.__path_configs+'systems');
 var util = require('util');
-var link = `/${systemConfig.prefixAdmin}/categorys/list`;
-var folderView = __path.__path_views+'page/backend/categorys' ;
+var link = `/${systemConfig.prefixAdmin}/domain/list`;
+var folderView = __path.__path_views+'page/backend/domain' ;
 
-var pageTitleIndex 	= 'Categorys Management - List';
+var pageTitleIndex 	= 'Domain Management - List';
 var pageTitleAdd 	= pageTitleIndex + ' - Add';
 var pageTitleEdit 	= pageTitleIndex + ' - Edit';
 
@@ -36,13 +36,13 @@ router.get('/list(/:status)?', async function(req, res, next) {
 		totalItemsPerPage:4,
 		pageRanges:3
 	}
-	await CategorysModel
+	await DomainModel
 		.countItem(params).then((data)=>{
 			params.pagination.totalItems = data;
 			params.pagination.totalPages = Math.ceil(params.pagination.totalItems/params.pagination.totalItemsPerPage);
 	});
 
-	CategorysModel.listItems(params)
+	DomainModel.listItems(params)
 		.then((items)=>{
 		res.render(`${folderView}/list`, { 
 			title:pageTitleIndex,
@@ -64,7 +64,7 @@ router.get('/list(/:status)?', async function(req, res, next) {
 // router.get('/change-group-acp/:id/:group_acp', function(req, res, next) {
 // 	let currentGroupACP 	= ParamHelpers.getParam(req.params,'group_acp','yes');;
 // 	let id 				= ParamHelpers.getParam(req.params,'id','');
-// 	CategorysModel.changeGroupACP(currentGroupACP,id).then((result) =>{
+// 	DomainModel.changeGroupACP(currentGroupACP,id).then((result) =>{
 // 		req.flash('success',notify.CHANGE_GROUPACP_SUCCES);
 // 		res.redirect(link);
 
@@ -82,7 +82,7 @@ router.get('/change-status/:id/:status', function(req, res, next) {
 	let currentStatus 	= ParamHelpers.getParam(req.params,'status','active');;
 	let id 				= ParamHelpers.getParam(req.params,'id','');
 
-	CategorysModel
+	DomainModel
 		.changeStatus(currentStatus,id,{task:'update-one'})
 		.then((result) => {
 		req.flash('success',notify.CHANGE_STATUS_SUCCESS);
@@ -93,7 +93,7 @@ router.get('/change-status/:id/:status', function(req, res, next) {
 router.post('/change-status/:status', function(req, res, next) {
 	let currentStatus 	= ParamHelpers.getParam(req.params,'status','active');;
 	
-	CategorysModel
+	DomainModel
 		.changeStatus(currentStatus,req.body.cid,{task:'update-multi'})
 		.then((result) =>{
 		req.flash('success', util.format(notify.CHANGE_STATUS_MULTI_SUCCESS,result.n));
@@ -107,7 +107,7 @@ router.post('/change-status/:status', function(req, res, next) {
 
 router.get('/delete/:id', function(req, res, next) {
 	let id 				= ParamHelpers.getParam(req.params,'id','');
-	CategorysModel.deleteItem(id,{task:'delete-one'}).then((result) =>{
+	DomainModel.deleteItem(id,{task:'delete-one'}).then((result) =>{
 		req.flash('success', notify.DELETE_SUCCESS);
 		res.redirect(link);
 	})
@@ -115,7 +115,7 @@ router.get('/delete/:id', function(req, res, next) {
 
 router.post('/delete', function(req, res, next) {
 	let id 				= req.body.cid;
-	CategorysModel.deleteItem(id,{task:'delete-multi'}).then((result) =>{
+	DomainModel.deleteItem(id,{task:'delete-multi'}).then((result) =>{
 		req.flash('success', util.format(notify.DELETE_MULTI_SUCCESS,result.n));
 		res.redirect(link);
 	})
@@ -128,7 +128,7 @@ router.post('/delete', function(req, res, next) {
 router.post('/save-ordering', function(req, res, next) {
 	let cids 		= req.body.cid;
 	let orderings 	= req.body.ordering;
-	CategorysModel.changeOrdering(cids,orderings,null).then((result)=>{
+	DomainModel.changeOrdering(cids,orderings,null).then((result)=>{
 		req.flash('success', notify.CHANGE_ORDERING_SUCCESS);
 		res.redirect(link);
 	});
@@ -153,7 +153,7 @@ router.get('/form(/:id)?', function(req, res, next) {
 			errors:errors
 		});
 	}else{
-		CategorysModel.getItem(id).then((result) =>{
+		DomainModel.getItem(id).then((result) =>{
 			res.render(`${folderView}/form`, { 
 				title: pageTitleEdit ,
 				item:result,
@@ -172,7 +172,7 @@ router.post('/save', function(req, res, next) {
 	req.body = JSON.parse(JSON.stringify(req.body));
 
 	// validator
-	categorysValidator.validator(req);
+	domainValidator.validator(req);
 	let item = Object.assign(req.body);
 	let errors = req.validationErrors();
 	let taskCurrent = (typeof item !== "undefined" && item.id !== "") ? "edit" : "add";
@@ -187,13 +187,12 @@ router.post('/save', function(req, res, next) {
 		});
 	}else{
 		let message = (taskCurrent == "add") ? notify.ADD_SUCCESS : notify.EDIT_SUCCESS;
-		CategorysModel.saveItem(item,{task:taskCurrent}).then((result) =>{
+		DomainModel.saveItem(item,{task:taskCurrent}).then((result) =>{
 			if(taskCurrent == "add"){
 				req.flash('success', message);
 				res.redirect(link);
 			}else if(taskCurrent == "edit"){
-				console.log(item)
-				ArticleModel.saveItem(item,{task:'change-categorys-name'}).then((results) =>{
+				ArticleModel.saveItem(item,{task:'change-domain'}).then((results) =>{
 					req.flash('success', message);
 					res.redirect(link);
 				});
