@@ -22,6 +22,7 @@ let validator = (req,errUpload,taskCurrent) =>{
 	req.checkBody('status',notify.VALIDATES.ERROR_STATUS).isNotEqual(option.status.value);
 
 	req.checkBody('categorys_id',notify.VALIDATES.ERROR_GROUP).isNotEqual(option.group.value);
+	req.checkBody('domain_id',notify.VALIDATES.ERROR_GROUP).isNotEqual(option.group.value);
 	
 	req.checkBody('content',util.format(notify.VALIDATES.ERROR_NAME,option.content.min,option.content.max))
 								.isLength({min:option.content.min,max:option.content.max});

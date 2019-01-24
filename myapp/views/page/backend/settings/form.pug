@@ -46,6 +46,7 @@ block content
 								.form-group
 									label Copy Right
 									input(class="form-control", name="copyright",value=(item!=undefined)?item.copyright:'', type="text", placeholder="copy right")
+								input(class="form-control", name="image_old", value=(item!=undefined)?item.logo:'', type="hidden")
 								button(type="submit", class="btn btn-primary")
 									| save
 								a(type="button", href='/'+system.prefixAdmin+'/admin',class="btn btn-default") Cancel

@@ -183,6 +183,11 @@ router.get('/form(/:id)?', async function(req, res, next) {
 			name:'',
 			slug:''
 		},
+		domain:{
+			id:'',
+			name:'',
+			slug:''
+		}
 	}
 	let errors = null;
 	let categorysItems = [];
@@ -254,6 +259,11 @@ router.post('/save',  function(req, res, next) {
 				id:item.categorys_id,
 				name:item.categorys_name,
 				slug:StringHelper.createAlias(item.categorys_name)
+			};
+			item.domain = {
+				id:item.domain_id,
+				name:item.domain_name,
+				slug:StringHelper.createAlias(item.domain_name)
 			};
 
 			if(taskCurrent == 'edit') item.thumbnail = item.image_old;

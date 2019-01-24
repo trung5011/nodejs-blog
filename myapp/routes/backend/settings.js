@@ -53,7 +53,7 @@ router.post('/save', function(req, res, next) {
 		req.body = JSON.parse(JSON.stringify(req.body));
 		let item = Object.assign(req.body);
 
-		item.logo = req.file.filename;
+		item.logo = (req.file !== undefined) ? req.file.filename : item.image_old;
 		SettingsModel.saveItem(item).then((result) =>{
 			// req.flash('success', message);
 			res.redirect(req.get('referer'));
