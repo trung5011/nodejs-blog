@@ -11,6 +11,8 @@ var layoutview = __path.__path_views +'page/frontend/index';
 var homeRouter = require('./home');
 var categorysRouter = require('./categorys');
 var singleRouter = require('./single');
+var contactRouter = require('./contact');
+
 var loginRouter = require('./auth/login');
 
 router.use('/'
@@ -22,6 +24,7 @@ router.use('/'
 router.use('/categorys', categorysRouter);
 router.use('/article', singleRouter);
 router.use('/auth', loginRouter);
+router.use('/contact', contactRouter);
 
 // router.use('(/:slug)?', categorysRouter);
 
