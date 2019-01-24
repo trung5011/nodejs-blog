@@ -8,7 +8,6 @@ var folderView = __path.__path_views +'page/frontend/page/index';
 var layoutview = __path.__path_views +'page/frontend/page/index';
 
 router.get('/', async function(req, res, next) {
-
 	let itemsNews =[];
 	
 	await ArticleItemModel.listItemsFrontend(null,{task:'items-news'}).then((items)=>{

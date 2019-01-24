@@ -168,7 +168,7 @@ app.locals.moment = moment;
 
 
 /************* router ************/
-app.use(`(/${systemConfig.prefixConfigs})?`, configsRouter);
+app.use(`/${systemConfig.prefixConfigs}`, configsRouter);
 
 var checkUserEmpty = async (req,res,next) => {
 	UsersModel.countDocuments().then((items)=>{
